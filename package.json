@@ -45,6 +45,9 @@
   },
   "scripts": {
     "init": "npm install",
-    "install": "bower install"
+    "install": "bower install",
+    "start": "node app",
+    "postinstall": "gulp default"
+
   }
 }
