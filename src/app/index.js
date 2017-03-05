@@ -4,7 +4,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'app' , 'md.data.table'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
-                    $mdIconProvider) {
+                    $mdIconProvider, $locationProvider) {
     $stateProvider
       .state('home', {
         url: '',
@@ -38,6 +38,15 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Table'
         }
       })
+      .state('home.prediction', {
+        url: '/prediction',
+        controller: 'PredictionController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/prediction.html',
+        data: {
+          title: 'Prediction'
+        }
+      })
       .state('home.logs', {
         url: '/logs',
         controller: 'LogsController',
@@ -48,6 +57,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         }
       });
 
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/dashboard');
 
     $mdThemingProvider

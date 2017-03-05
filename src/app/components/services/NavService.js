@@ -15,8 +15,13 @@
         sref: '.dashboard'
       },
       {
+        name: 'Prediction',
+        icon: 'timeline',
+        sref: '.prediction'
+      },
+      {
         name: 'Logs',
-        icon: 'view_module',
+        icon: 'description',
         sref: '.logs'
       }
     ];
