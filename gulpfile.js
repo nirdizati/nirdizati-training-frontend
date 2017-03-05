@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+// var connect = require('gulp-connect');
 
 gulp.paths = {
   src: 'src',
@@ -11,16 +12,15 @@ gulp.paths = {
 
 require('require-dir')('./gulp');
 
-// // // gulp.task('default', ['clean'], function () {
-// // //     gulp.start('build');
-// // // });
+// gulp.task('default', ['clean'], function () {
+//     gulp.start('build');
+// });
 
-// gulp.task('default', ['clean']);
+gulp.task('default', ['clean', 'serve']);
 
 // gulp.task('serveprod', function() {
-//   connect.server({
-//     root: [your_project_path],
-//     port: process.env.PORT || 8090, // localhost:5000
-//     livereload: false
-//   });
+  // connect.server({
+  //   port: process.env.PORT || 8090, // localhost:5000
+  //   livereload: false
+  // });
 // });
