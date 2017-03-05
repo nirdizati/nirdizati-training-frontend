@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp');
-var connect = require('gulp-connect');
 
 var paths = gulp.paths;
 
@@ -34,10 +33,6 @@ function browserSyncInit(baseDir, files, browser) {
 }
 
 gulp.task('serve', ['watch'], function () {
-  // connect.server({
-  //   port: process.env.PORT || 8090, // localhost:5000
-  //   livereload: false
-  // });
   browserSyncInit([
     paths.tmp + '/serve',
     paths.src
