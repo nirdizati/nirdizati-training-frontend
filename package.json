@@ -49,6 +49,6 @@
     "init": "npm install",
     "install": "bower install",
     "start": "node app",
-    "postinstall": "gulp serve"
+    "postinstall": "gulp default"
   }
 }
