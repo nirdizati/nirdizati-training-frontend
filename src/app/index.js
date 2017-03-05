@@ -38,13 +38,13 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Table'
         }
       })
-      .state('home.data-table', {
-        url: '/data-table',
-        controller: 'DataTableController',
+      .state('home.logs', {
+        url: '/logs',
+        controller: 'LogsController',
         controllerAs: 'vm',
-        templateUrl: 'app/views/data-table.html',
+        templateUrl: 'app/views/logs.html',
         data: {
-          title: 'Table'
+          title: 'Logs'
         }
       });
 
