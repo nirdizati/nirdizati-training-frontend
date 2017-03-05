@@ -1,8 +1,6 @@
 'use strict';
 
-var gulp = require('gulp'),
-  connect = require('gulp-connect');
- 
+var gulp = require('gulp');
 
 gulp.paths = {
   src: 'src',
