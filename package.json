@@ -47,6 +47,7 @@
     "npm": "4.3.0"
   },
   "scripts": {
-    "postinstall": "npm install && bower install && gulp serve"
+    "init": "npm install",
+    "install": "bower install"
   }
 }
