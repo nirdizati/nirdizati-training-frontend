@@ -2,14 +2,14 @@
     <!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
     <md-toolbar class="md-table-toolbar md-default">
     <div class="md-toolbar-tools">
-        <span>Upload Log</span>
+        <span>Predictions</span>
     </div>
     </md-toolbar>
 
-    <md-toolbar class="md-table-toolbar md-default">
-    <div class="md-toolbar-tools">
-        <input class="ng-hide" id="input-file-id" multiple type="file" />
-        <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+    <div layout-gt-md="row">
+      <panel-widget flex title="Number of Traces" template="app/views/partials/visitors.html" class="fixed-height-widget"></panel-widget>
+      <panel-widget flex title="Number of Resources" template="app/views/partials/warnings.html" class="fixed-height-widget"></panel-widget>
+      <panel-widget flex title="Event Types" template="app/views/partials/memory.html" class="fixed-height-widget"></panel-widget>
     </div>
-    </md-toolbar>
+
 </div>
