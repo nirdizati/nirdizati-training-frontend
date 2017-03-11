@@ -1,10 +1,8 @@
 'use strict'
 /* global angular */
 
-var app = angular.module('app');
+var app = angular.module('angularMaterialAdmin');
 
 app.service('LogsService', function ($resource, BackEnd) {
-	var link = $resource(BackEnd.link+'/logs', {});
-	alert(link);
-  return link;
+  return $resource(BackEnd.link+'logs', {});
 });

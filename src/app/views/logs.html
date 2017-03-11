@@ -5,11 +5,29 @@
         <span>Upload Log</span>
     </div>
     </md-toolbar>
+    <md-content layout-padding>
+        <div>
+          <form ng-controller="LogsController">
 
-    <md-toolbar class="md-table-toolbar md-default">
-    <div class="md-toolbar-tools">
-        <input class="ng-hide" id="input-file-id" multiple type="file" />
-        <label for="input-file-id" class="md-button md-raised">Choose File</label>
-    </div>
-    </md-toolbar>
+            <md-input-container class="md-block">
+                <label>Name</label>
+                <input ng-model="log.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Enter Description</label>
+                <textarea ng-model="log.description" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <!-- <md-input-container> -->
+                <!-- <label for="log.file">Upload Log</label> -->
+                <input class="ng-hide" id="input-file-id" multiple type="file" />
+                <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+            <!-- </md-input-container>        -->
+
+            <div class="button-toolbar" layout="row" layout-align="end center">
+                <md-button class="md-primary" type="submit">Create</md-button>
+            </div>
+          </form>
+        </div>
+    </md-content>
+
 </div>

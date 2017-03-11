@@ -4,15 +4,14 @@
     .module('app')
     .controller('LogsController', [
       '$scope',
+      'LogsService',
       LogsController
-      
     ]);
 
   function LogsController($scope, LogsService) {
-  	alert("here");
-  	// LogsService.get(function(data) {
-  	// 	alert(data);
-  	// });
+  	LogsService.get({}, function(data) {
+  		console.log(data);
+  	});
   }
 
 })();
