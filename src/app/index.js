@@ -57,7 +57,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         }
       });
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/dashboard');
 
     $mdThemingProvider
@@ -101,3 +101,4 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
     $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
   });
+
