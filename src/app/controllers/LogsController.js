@@ -10,9 +10,9 @@
 
   function LogsController($scope, LogsService) {
   	alert("here");
-  	LogsService.get(function(data) {
-  		alert(data);
-  	});
+  	// LogsService.get(function(data) {
+  	// 	alert(data);
+  	// });
   }
 
 })();

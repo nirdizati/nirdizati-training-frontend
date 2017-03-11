@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  var app = angular.module('app', [ 'ngMaterial','ngResource' ]);
+  var app = angular.module('app', [ 'ngMaterial' ]);
 
   app.factory('BackEnd', function() {
 	  return {
