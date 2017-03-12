@@ -3,11 +3,11 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', 'LogsService', '$scope',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', 'LogsService', '$scope', 'WorkloadService',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService) {
     var vm = this;
 
     vm.menuItems = [ ];
@@ -84,10 +84,7 @@
 
     $scope.update = function(){
       alert($scope.selectedLog);
-      LogsService.query({}, function(data) {
-        $scope.logs = data;
-        console.log(data);
-      });
+
     }
   }
 

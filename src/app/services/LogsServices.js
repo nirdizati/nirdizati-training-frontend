@@ -7,6 +7,6 @@ app.service('LogsService', function ($resource, BackEnd) {
   return $resource(BackEnd.link+'logs', {});
 });
 
-// app.service('LogsServiceGet', function ($resource, BackEnd) {
-//   return $resource(BackEnd.link+'logs', {'query': {method: 'GET', isArray: true }});
-// });
+app.service('WorkloadService', function ($resource, BackEnd) {
+  return $resource(BackEnd.link+'encode/dailyworkload/:id', {});
+});
