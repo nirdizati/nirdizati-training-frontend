@@ -10,3 +10,7 @@ app.service('LogsService', function ($resource, BackEnd) {
 app.service('WorkloadService', function ($resource, BackEnd) {
   return $resource(BackEnd.link+'encode/dailyworkload/:id', {});
 });
+
+app.service('ResourcesLoadService', function ($resource, BackEnd) {
+  return $resource(BackEnd.link+'encode/dailyresources/:id', {});
+});
