@@ -3,11 +3,11 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', 'LogsService', '$scope',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope) {
     var vm = this;
 
     vm.menuItems = [ ];
@@ -75,6 +75,19 @@
           .hideDelay(2000)
           .position('bottom right')
       );
+    }
+
+    LogsService.query({}, function(data) {
+      $scope.logs = data;
+      console.log(data);
+    });
+
+    $scope.update = function(){
+      alert($scope.selectedLog);
+      LogsService.query({}, function(data) {
+        $scope.logs = data;
+        console.log(data);
+      });
     }
   }
 

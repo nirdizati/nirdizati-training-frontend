@@ -1,6 +1,13 @@
 <md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
 	<div class="md-toolbar-tools">
-		<span>Log: <u>Hospital Data</u></span>
+		<span>Log:</span>
+    <md-input-container ng-controller="MainController">
+        <md-select ng-model="selectedLog" placeholder="Select Log" ng-change="update()">
+          <md-option ng-repeat="log in logs" ng-value="log.id"">
+            {{log.name}}
+          </md-option>
+        </md-select>
+    </md-input-container>
 	</div>
 	<div layout-align="end center">
 		<md-button href="/logs" class="md-accent">Upload New Log</md-button>

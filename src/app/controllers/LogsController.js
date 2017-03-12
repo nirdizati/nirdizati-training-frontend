@@ -11,9 +11,6 @@
     ]);
 
   function LogsController($scope, LogsService, Upload, BackEnd) {
-  	LogsService.get({}, function(data) {
-  		console.log(data);
-  	});
 
   	$scope.submit = function() {
 	  	if ($scope.file) {
