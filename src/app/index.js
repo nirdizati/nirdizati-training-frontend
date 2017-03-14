@@ -4,7 +4,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'app' , 'md.data.table', 'ngResource', 'ngFileUpload'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
-                    $mdIconProvider, $locationProvider) {
+                    $mdIconProvider, $locationProvider, $httpProvider) {
     $stateProvider
       .state('home', {
         url: '',
@@ -100,5 +100,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     });
 
     $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
+
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
   });
 

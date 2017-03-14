@@ -6,10 +6,14 @@
     </div>
     </md-toolbar>
 
-    <div layout-gt-md="row">
-      <panel-widget flex title="Number of Traces" template="app/views/partials/visitors.html" class="fixed-height-widget"></panel-widget>
-      <panel-widget flex title="Number of Resources" template="app/views/partials/warnings.html" class="fixed-height-widget"></panel-widget>
-      <panel-widget flex title="Event Types" template="app/views/partials/memory.html" class="fixed-height-widget"></panel-widget>
-    </div>
+          <form ng-controller="PredictionController">
+            <md-input-container>
+                <input type="file" id="file" ngf-select ng-model="file" name="file" ngf-accept="'.csv'"/>
+            </md-input-container>       
+
+            <div class="button-toolbar" layout="row" layout-align="end center">
+                <button class="md-primary" ng-click="submit()">Upload</button>
+            </div>
+          </form>
 
 </div>

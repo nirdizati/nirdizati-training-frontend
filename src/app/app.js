@@ -5,9 +5,17 @@
 
   app.factory('BackEnd', function() {
 	  return {
-	      // link : 'http://localhost:8080/api/'
-	      link : 'https://predictbackend.sloppy.zone/'
+	      link : 'http://localhost:8080/api/',
+	      // link : 'https://predictbackend.sloppy.zone/'
 	  };
   });
+
+  app.factory('PredictionLink', function() {
+	  return {
+	      link : 'http://localhost:8000/',
+	      // link : 'https://predictbackend.sloppy.zone/'
+	  };
+  });
+
 
 })();
