@@ -12,8 +12,8 @@
 
   app.factory('PredictionLink', function() {
 	  return {
-	      link : 'http://localhost:8000/',
-	      // link : 'https://predictbackend.sloppy.zone/'
+	      // link : 'http://localhost:8000/',
+	      link : 'http://193.40.11.48/'
 	  };
   });
 
