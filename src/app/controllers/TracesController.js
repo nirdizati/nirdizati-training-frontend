@@ -1,51 +1,57 @@
 (function () {
     angular
         .module('app')
-        .controller('TracesController', ['WorkloadService', '$scope',
+        .controller('TracesController', ['WorkloadService', '$scope', 
             TracesController
         ]);
 
-    function TracesController(WorkloadService, $scope) {
-        var vm = this;
-        vm.tracesChartData = tracesFunction;
-
-        function tracesFunction() {
-
-            var data = WorkloadService.get({id: 1}, function(result) {
-                console.log(result);
-                var data = [];
-                var count = 0;
-                for (var date in result) {
-                    data.push({x: date, y: result[date]});
-                    count++;
-                }
-                vm.tracesChartData = [ { values: data, color: 'rgb(0, 150, 136)', area: true } ];
-            });
-
-
-            return [ { values: data, color: 'rgb(0, 150, 136)', area: true } ];
+    function TracesController(WorkloadService, $scope, googlechart) {
+        function onlyUnique(value, index, self) { 
+          return self.indexOf(value) === index;
         }
 
-        vm.chartOptions = {
-            chart: {
-                type: 'lineChart',
-                height: 230,
-                margin: { top: -10, left: 20, right: 20 },
-                x: function (d) {
-                    //console.log(new Date(newDate).getTime());
-                    // return d3.time.format('%Y-%m-%d').parse(d.x);
-                    return new Date(d.x).getTime();
-                },
-                y: function (d) {
-                    return d.y;
-                },
-                showLabels: true,
-                showLegend: true,
-                title: 'Traces per day',
-                showYAxis: true,
-                showXAxis: false,
-                tooltip: { contentGenerator: function (d) { return '<span class="custom-tooltip">' + new Date(d.point.x).toLocaleDateString() +' - ' + Math.round(d.point.y) + '</span>' } }
-            }
-        };
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Date');
+            data.addColumn('number', 'ActiveTraces');
+
+            values = [];
+
+            var traceRes = WorkloadService.get({}, function(result) {
+
+                console.log(result);
+
+                var i = 0;
+
+                for (var key in result) {
+                    var val = result[key];
+                    values.push([new Date(key), Number(val)]);
+                }
+
+                data.addRows(values);
+                // $scope.data = data;
+                chart.draw(data, options);
+
+            }); 
+
+
+            var options = {
+              hAxis: {
+                format: 'dd-MM-yy',
+                title: 'Date'
+              },
+              vAxis: {
+                title: 'Active Traces'
+              }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('traces_chart'));
+
+            chart.draw(data, options);
+
+        }
     }
 })();

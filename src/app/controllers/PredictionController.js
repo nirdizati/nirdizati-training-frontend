@@ -39,74 +39,20 @@
   		});
     };
 
+    $scope.logs = ["Production Log", "Hospital Log"];
+
 	$scope.traces = [];
 	$scope.selectedTrace = 0;
 	$scope.data = [];
-    // $scope.predictionChartData = resultsFunction($scope, $scope.selectedTrace);
 
 	function onlyUnique(value, index, self) { 
 	    return self.indexOf(value) === index;
 	}
 
-   //  function resultsFunction($scope, selectedValue) {
-
-   //      var data = PredictionResults.get({}, function(result) {
-
-   //      	var ids = Object.values(result.id);
-   //      	ids = ids.filter(onlyUnique);
-   //      	var trace = [];
-   //      	var remainingTime = [];
-   //      	var prediction = [];
-
-   //      	$scope.traces = ids;
-
-   //      	Object.keys(result['id']).forEach(function (key) {
-			//    if(result.id[key] == selectedValue){
-			//        trace.push(key);
-			//        remainingTime.push(result.remaining_time[key]);
-			//        prediction.push(result.LM_pred[key]);
-			//    }
-			// });
-   //      	// var idsUnique = ids.filter(onlyUnique);
-   //          console.log(result);
-
-   //          var data = [];
-   //          for (var i = 0; i < trace.length; i++) {
-   //              data.push({x: i, y: result.remaining_time[trace[i]]});
-   //          }
-   //          $scope.data = data;
-
-   //          $scope.predictionChartData = [ { values: $scope.data, color: 'rgb(0, 150, 136)'} ];
-   //      });
-   //  }
-
     $scope.update = function(){
 		$scope.selectedTrace = $scope.selectedTrace;
 		google.charts.setOnLoadCallback(drawBasic);
-		// resultsFunction($scope, $scope.selectedTrace);
-		// setTimeout(function(){
-		// 	console.log('scope api:', $scope.api);
-		// 	$scope.api.refresh();
-		// });
     }
-
-   	$scope.chartOptions = {
-        chart: {
-            type: 'lineChart',
-            x: function (d) {
-                return d.x;
-            },
-            y: function (d) {
-                return d.y;
-            },
-            showLabels: true,
-            showLegend: true,
-            title: 'Results',
-            showYAxis: true,
-            showXAxis: false,
-            tooltip: { contentGenerator: function (d) { return '<span class="custom-tooltip">' + Math.round(d.point.y) + '</span>' } }
-        }
-    };
 
 
     google.charts.load('current', {packages: ['corechart', 'line']});
@@ -116,7 +62,10 @@
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', 'Point in Time');
 		data.addColumn('number', 'Actual Remaining Time');
-		data.addColumn('number', 'Predicted Remaining Time');
+		data.addColumn('number', 'Predicted - Linear Regression');
+		data.addColumn('number', 'Predicted - XGBoost');
+		data.addColumn('number', 'Predicted - Random Forest');
+		data.addColumn('number', 'Predicted - Lasso');
 
 		values = []
 
@@ -137,7 +86,11 @@
 			       trace.push(key);
 			       // remainingTime.push(result.remaining_time[key]);
 			       // prediction.push(result.LM_pred[key]);
-			       values.push([i++,result.remaining_time[key], result.LM_pred[key]]);
+			       values.push([i++,result.remaining_time[key],
+			        result.LM_pred[key],
+			        result.XG_2000[key],
+			        result.RF_50[key],
+			        result.Lasso[key]]);
 			   }
 			});
         	// var idsUnique = ids.filter(onlyUnique);
@@ -170,6 +123,28 @@
 		chart.setSelection([{row: 38, column: 1}]);
 
 		}
+
+		google.charts.load('current', {'packages':['table']});
+	    google.charts.setOnLoadCallback(drawTable);
+
+		function drawTable() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Name');
+			data.addColumn('number', 'Salary');
+			data.addColumn('boolean', 'Full Time Employee');
+			data.addRows([
+			  ['Mike',  {v: 10000, f: '$10,000'}, true],
+			  ['Jim',   {v:8000,   f: '$8,000'},  false],
+			  ['Alice', {v: 12500, f: '$12,500'}, true],
+			  ['Bob',   {v: 7000,  f: '$7,000'},  true]
+			]);
+
+			// var table = new google.visualization.Table(document.getElementById('table_div'));
+
+			// table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+		}
 	}
+
+
 
 })();

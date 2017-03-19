@@ -3,11 +3,13 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', 'LogsService', '$scope', 'WorkloadService',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+          '$state', '$mdToast', 'LogsService', '$scope',
+          'WorkloadService', 'LogsList',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService, LogsList) {
     var vm = this;
 
     vm.menuItems = [ ];
@@ -77,7 +79,11 @@
       );
     }
 
-    LogsService.query({}, function(data) {
+    // LogsService.query({}, function(data) {
+    //   $scope.logs = data;
+    //   console.log(data);
+    // });
+    LogsList.query({}, function(data) {
       $scope.logs = data;
       console.log(data);
     });
@@ -86,6 +92,8 @@
       alert($scope.selectedLog);
 
     }
+
+
   }
 
 })();

@@ -5,47 +5,53 @@
             ResourcesController
         ]);
 
-    function ResourcesController(ResourcesLoadService, $scope) {
-        var vm = this;
-        vm.resourcesChartData = resourcesFunction;
-
-        function resourcesFunction() {
-
-            var data = ResourcesLoadService.get({id: 1}, function(result) {
-                console.log(result);
-                var data = [];
-                var count = 0;
-                for (var date in result) {
-                    data.push({x: date, y: result[date]});
-                    count++;
-                }
-                vm.resourcesChartData = [ { values: data, color: 'rgb(0, 150, 136)', area: true } ];
-            });
-
-
-            return [ { values: data, color: 'rgb(0, 150, 136)', area: true } ];
+    function ResourcesController(ResourcesLoadService, $scope, googlechart) {
+        function onlyUnique(value, index, self) { 
+          return self.indexOf(value) === index;
         }
 
-        vm.chartOptions = {
-            chart: {
-                type: 'lineChart',
-                height: 230,
-                margin: { top: -10, left: 20, right: 20 },
-                x: function (d) {
-                    //console.log(new Date(newDate).getTime());
-                    // return d3.time.format('%Y-%m-%d').parse(d.x);
-                    return new Date(d.x).getTime();
-                },
-                y: function (d) {
-                    return d.y;
-                },
-                showLabels: true,
-                showLegend: true,
-                title: 'Resources per day',
-                showYAxis: true,
-                showXAxis: false,
-                tooltip: { contentGenerator: function (d) { return '<span class="custom-tooltip">' + new Date(d.point.x).toLocaleDateString() +' - ' + Math.round(d.point.y) + '</span>' } }
-            }
-        };
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawResources);
+
+        function drawResources() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Date');
+            data.addColumn('number', 'Active Resources');
+
+            resData = [];
+
+            var traceRes = ResourcesLoadService.get({}, function(result) {
+
+                console.log(result);
+
+                var i = 0;
+
+                for (var key in result) {
+                    var val = result[key];
+                    resData.push([new Date(key), Number(val)]);
+                }
+
+                data.addRows(resData);
+                // $scope.data = data;
+                chart.draw(data, options);
+
+            }); 
+
+
+            var options = {
+              hAxis: {
+                format: 'dd-MM-yy',
+                title: 'Date'
+              },
+              vAxis: {
+                title: 'Active Resources'
+              }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('resources_chart'));
+
+            chart.draw(data, options);
+
+        }
     }
 })();

@@ -5,40 +5,52 @@
             EventExecutionsController
         ]);
 
-    function EventExecutionsController(EventExecutionsService, $scope) {
-        var vm = this;
-        vm.eventsChartData = [];
+    function EventExecutionsController(EventExecutionsService, $scope, googlechart) {
+        function onlyUnique(value, index, self) { 
+          return self.indexOf(value) === index;
+        }
 
-        EventExecutionsService.get({id: 1}, function(result) {
-            console.log(result);
-            var data = [];
-            var count = 0;
-            for (var event in result) {
-                data.push({label: event, value: result[event]});
-                count++;
-                if(count == 20) break;
-            }
-            vm.eventsChartData = [ { values: data, color: 'rgb(0, 150, 136)', area: true } ];
-        });
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawResources);
 
-        vm.chartOptions = {
-            chart: {
-                height: 230,
-                
-                type: 'discreteBarChart',
-                x: function (d) {
-                    return d.label;
-                },
-                y: function (d) {
-                    return d.value;
-                },
-                showLabels: false,
-                showLegend: false,
-                title: 'Event Executions',
-                showYAxis: true,
-                showXAxis: false,
-                tooltip: { contentGenerator: function (d) { return '<span class="custom-tooltip">[' + d.data.label + ']-' + d.data.value + '</span>' } }
-            }
-        };
+        function drawResources() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Event');
+            data.addColumn('number', 'Number of Executions');
+
+            eventRes = [];
+
+            var traceRes = EventExecutionsService.get({}, function(result) {
+
+                console.log(result);
+
+                var i = 0;
+
+                for (var key in result) {
+                    var val = result[key];
+                    eventRes.push([key, Number(val)]);
+                }
+
+                data.addRows(eventRes);
+                // $scope.data = data;
+                chart.draw(data, options);
+
+            }); 
+
+
+            var options = {
+              hAxis: {
+                title: 'Event'
+              },
+              vAxis: {
+                title: 'Number of Executions'
+              }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('events_chart'));
+
+            chart.draw(data, options);
+
+        }
     }
 })();

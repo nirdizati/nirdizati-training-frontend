@@ -3,8 +3,8 @@
 		<span>Log:</span>
     <md-input-container ng-controller="MainController">
         <md-select ng-model="selectedLog" placeholder="Select Log" ng-change="update()">
-          <md-option ng-repeat="log in logs" ng-value="log.id"">
-            {{log.name}}
+          <md-option ng-repeat="log in logs" ng-value="log"">
+            {{log}}
           </md-option>
         </md-select>
     </md-input-container>
@@ -15,9 +15,21 @@
 </md-toolbar>
 
 <div layout-gt-md="row">
-  <panel-widget flex title="Number of Traces" template="app/views/partials/traces.html" class="fixed-height-widget"></panel-widget>
-  <panel-widget flex title="Number of Resources" template="app/views/partials/resources.html" class="fixed-height-widget"></panel-widget>
-  <panel-widget flex title="Most Executed Events" template="app/views/partials/eventexecutions.html" class="fixed-height-widget"></panel-widget>
+  <panel-widget flex title="Number of Traces" class="fixed-height-widget">
+    <md-content class="md-padding" ng-controller="TracesController">
+      <div id="traces_chart" style="width: 90%;"></div>
+    </md-content>
+  </panel-widget>
+  <panel-widget flex title="Number of Resources" class="fixed-height-widget">
+    <md-content class="md-padding" ng-controller="ResourcesController">
+      <div id="resources_chart" style="width: 90%;"></div>
+    </md-content>
+  </panel-widget>
+  <panel-widget flex title="Most Executed Events" class="fixed-height-widget">
+    <md-content class="md-padding" ng-controller="EventExecutionsController">
+      <div id="events_chart" style="width: 90%;"></div>
+    </md-content>
+  </panel-widget>
 </div>
 
 <div layout-gt-md="row"><!-- 
