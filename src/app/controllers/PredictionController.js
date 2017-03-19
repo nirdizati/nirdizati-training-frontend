@@ -29,7 +29,7 @@
 	        .parent(angular.element(document.querySelector('#prediction_div')))
 	        .clickOutsideToClose(true)
 	        .title('Encoding and Training')
-	        .textContent('This is to notify you that your model is not training and evaluating the log')
+	        .textContent('This is to notify you that your model is not training and evaluating the log. This page will automatically refresh when done.')
 	        .ok('Got it!')
 	    );
   		LogsService.get({'log': selectedLog}, function(result) {
