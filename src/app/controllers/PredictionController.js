@@ -10,11 +10,12 @@
       'PredictionResults',
       'Prediction',
       'LogsService',
+      '$mdDialog',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService,googlechart) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService,$mdDialog, googlechart) {
 
 
     var selectedLog = $cookies.get('selectedLog');
@@ -23,6 +24,14 @@
     $scope.selectedLog = selectedLog;
   	$scope.train = function() {
   		console.log("train");
+  		$mdDialog.show(
+	      $mdDialog.alert()
+	        .parent(angular.element(document.querySelector('#prediction_div')))
+	        .clickOutsideToClose(true)
+	        .title('Encoding and Training')
+	        .textContent('This is to notify you that your model is not training and evaluating the log')
+	        .ok('Got it!')
+	    );
   		LogsService.get({'log': selectedLog}, function(result) {
   			console.log("encoding the file");
   			Prediction.save({}, function(result){
