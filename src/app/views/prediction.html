@@ -7,6 +7,9 @@
     </md-toolbar>
 
     <form ng-controller="PredictionController">
+      <div class="button-toolbar" layout="row" layout-align="end center">
+          <button class="md-primary" ng-click="train()">Train And Predict</button>
+      </div>
 <!--       <md-input-container>
           <input type="file" id="file" ngf-select ng-model="file" name="file" ngf-accept="'.csv'"/>
       </md-input-container>       
@@ -25,13 +28,13 @@
           <button class="md-primary" ng-click="submit()">Upload</button>
       </div> -->
 
-      <div layout-gt-md="row">
+<!--       <div layout-gt-md="row">
         <panel-widget flex title="General Results" class="fixed-height-widget">
           <div id="table_div" style="width: 90%;"></div>
         </panel-widget>
         <panel-widget flex title="Evaluation Graph" class="fixed-height-widget"></panel-widget>
       </div>
-
+ -->
       <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
         <md-option ng-repeat="value in traces" ng-value="value">
           Trace {{value}}

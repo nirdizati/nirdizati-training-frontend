@@ -1,26 +1,26 @@
 (function () {
     angular
         .module('app')
-        .controller('EventExecutionsController', ['EventExecutionService', '$scope',
+        .controller('EventExecutionsController', ['EventExecutionService', '$scope','$cookies', '$cookieStore',
             EventExecutionsController
         ]);
 
-    function EventExecutionsController(EventExecutionsService, $scope, googlechart) {
+    function EventExecutionsController(EventExecutionsService, $scope, googlechart, $cookies, $cookieStore) {
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
 
         google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawResources);
+        google.charts.setOnLoadCallback(function (){drawEvents($cookies.get('selectedLog'));});
 
-        function drawResources() {
+        function drawEvents(selectedLog) {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Event');
             data.addColumn('number', 'Number of Executions');
 
             eventRes = [];
 
-            var traceRes = EventExecutionsService.get({}, function(result) {
+            var traceRes = EventExecutionsService.get({'log': selectedLog}, function(result) {
 
                 console.log(result);
 

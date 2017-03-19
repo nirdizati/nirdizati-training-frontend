@@ -1,26 +1,26 @@
 (function () {
     angular
         .module('app')
-        .controller('TracesController', ['WorkloadService', '$scope', 
+        .controller('TracesController', ['WorkloadService', '$scope', '$cookies', '$cookieStore',
             TracesController
         ]);
 
-    function TracesController(WorkloadService, $scope, googlechart) {
+    function TracesController(WorkloadService, $scope, googlechart, $cookies, $cookieStore) {
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
 
         google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawBasic);
+        google.charts.setOnLoadCallback(function (){drawTraces($cookies.get('selectedLog'));});
 
-        function drawBasic() {
+        function drawTraces(selectedLog) {
             var data = new google.visualization.DataTable();
             data.addColumn('date', 'Date');
             data.addColumn('number', 'ActiveTraces');
 
             values = [];
 
-            var traceRes = WorkloadService.get({}, function(result) {
+            var traceRes = WorkloadService.get({'log': selectedLog}, function(result) {
 
                 console.log(result);
 

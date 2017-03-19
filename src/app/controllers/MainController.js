@@ -5,11 +5,11 @@
        .controller('MainController', [
           'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
           '$state', '$mdToast', 'LogsService', '$scope',
-          'WorkloadService', 'LogsList',
+          'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService, LogsList) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService, LogsList, $cookies, $cookieStore, $window) {
     var vm = this;
 
     vm.menuItems = [ ];
@@ -85,14 +85,24 @@
     // });
     LogsList.query({}, function(data) {
       $scope.logs = data;
+      if(!$cookies.get('selectedLog')){
+        $scope.selectedLog = data[0];
+        $cookieStore.put('selectedLog', $scope.selectedLog);
+      }
+      else{
+        selectedLog = $cookies.get('selectedLog');
+        selectedLog = selectedLog.replace(/['"]+/g, '');
+        $scope.selectedLog = selectedLog;
+      }
+      
       console.log(data);
     });
 
     $scope.update = function(){
-      alert($scope.selectedLog);
-
+      $scope.selectedLog = $scope.selectedLog;
+      $cookieStore.put('selectedLog', $scope.selectedLog);
+      location.reload(); 
     }
-
 
   }
 

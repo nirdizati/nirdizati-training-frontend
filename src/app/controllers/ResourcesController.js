@@ -1,26 +1,26 @@
 (function () {
     angular
         .module('app')
-        .controller('ResourcesController', ['ResourcesLoadService', '$scope',
+        .controller('ResourcesController', ['ResourcesLoadService', '$scope','$cookies', '$cookieStore',
             ResourcesController
         ]);
 
-    function ResourcesController(ResourcesLoadService, $scope, googlechart) {
+    function ResourcesController(ResourcesLoadService, $scope, googlechart, $cookies, $cookieStore) {
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
 
         google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawResources);
+        google.charts.setOnLoadCallback(function (){drawResources($cookies.get('selectedLog'));});
 
-        function drawResources() {
+        function drawResources(selectedLog) {
             var data = new google.visualization.DataTable();
             data.addColumn('date', 'Date');
             data.addColumn('number', 'Active Resources');
 
             resData = [];
 
-            var traceRes = ResourcesLoadService.get({}, function(result) {
+            var traceRes = ResourcesLoadService.get({'log': selectedLog}, function(result) {
 
                 console.log(result);
 

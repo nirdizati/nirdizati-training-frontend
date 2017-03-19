@@ -8,11 +8,12 @@
       'PredictionLink',
       '$cookies',
       'PredictionResults',
+      '$cookies',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, googlechart) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, googlechart, $cookies) {
 
 	
     $scope.submit = function() {
