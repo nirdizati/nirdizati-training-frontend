@@ -8,14 +8,29 @@
       'PredictionLink',
       '$cookies',
       'PredictionResults',
-      '$cookies',
+      'Prediction',
+      'LogsService',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, googlechart, $cookies) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService,googlechart) {
 
-	
+
+    var selectedLog = $cookies.get('selectedLog');
+    selectedLog = selectedLog.replace(/['"]+/g, '');
+
+    $scope.selectedLog = selectedLog;
+  	$scope.train = function() {
+  		console.log("train");
+  		LogsService.get({'log': selectedLog}, function(result) {
+  			console.log("encoding the file");
+  			Prediction.save({}, function(result){
+  				console.log("training and making the prediction");
+  				location.reload();
+  			});
+  		});
+  	}
     $scope.submit = function() {
 		if ($scope.file) {
 			$scope.upload($scope.file);
@@ -40,7 +55,7 @@
   		});
     };
 
-    $scope.logs = ["Production Log", "Hospital Log"];
+    // $scope.logs = ["Production Log", "Hospital Log"];
 
 	$scope.traces = [];
 	$scope.selectedTrace = 0;
