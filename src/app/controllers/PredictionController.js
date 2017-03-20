@@ -10,12 +10,13 @@
       'PredictionResults',
       'Prediction',
       'LogsService',
+      'PredictionEvaluation',
       '$mdDialog',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService,$mdDialog, googlechart) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, $mdDialog, googlechart) {
 
 
     var selectedLog = $cookies.get('selectedLog');
@@ -74,13 +75,31 @@
 	    return self.indexOf(value) === index;
 	}
 
-    $scope.update = function(){
-		$scope.selectedTrace = $scope.selectedTrace;
-		google.charts.setOnLoadCallback(drawBasic);
-    }
 
 
-    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.load('current', {packages: ['corechart', 'line', 'table']});
+    // google.charts.setOnLoadCallback(drawTable);
+
+	// function drawTable() {
+	// 	var data = new google.visualization.DataTable();
+	// 	data.addColumn('string', 'Prediction Method');
+	// 	data.addColumn('number', 'RMSE');
+	// 	data.addColumn('number', 'MAE');
+
+	// 	table_values = [];
+	// 	var evaluationRes = PredictionEvaluation.get({}, function(result) {
+	// 		table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
+	// 		table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
+	// 		table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
+	// 		table_values.push(["XGBoost - 2000 Trees", result.RMSE.XG_2000, result.MAE.XG_2000]);
+	// 		data.addRows(table_values);
+	// 		table.draw(data, {width: '100%', height: '100%'});
+	// 	});
+
+	// 	var table = new google.visualization.Table(document.getElementById('table_div'));
+	// 	table.draw(data, {width: '100%', height: '100%'});
+	// }
+
 	google.charts.setOnLoadCallback(drawBasic);
 
 	function drawBasic() {
@@ -95,7 +114,7 @@
 		values = []
 
 		var predictionRes = PredictionResults.get({}, function(result) {
-
+			console.log(result);
         	var ids = Object.values(result.id);
         	ids = ids.filter(onlyUnique);
         	var trace = [];
@@ -118,18 +137,8 @@
 			        result.Lasso[key]]);
 			   }
 			});
-        	// var idsUnique = ids.filter(onlyUnique);
-            console.log(result);
-
-            
-            // for (var i = 0; i < trace.length; i++) {
-            //     // data.push({x: i, y: result.remaining_time[trace[i]]});
-            //     values.push([i,result.remaining_time[trace[i]]]);
-            // }
             data.addRows(values);
-            // $scope.data = data;
-            chart.draw(data, options);
-            // $scope.predictionChartData = [ { values: $scope.data, color: 'rgb(0, 150, 136)'} ];
+            chart_div.draw(data, options);
         });
 
 
@@ -142,34 +151,14 @@
 			}
 		};
 
-		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		var chart_div = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-		chart.draw(data, options);
-		chart.setSelection([{row: 38, column: 1}]);
-
-		}
-
-		google.charts.load('current', {'packages':['table']});
-	    google.charts.setOnLoadCallback(drawTable);
-
-		function drawTable() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Name');
-			data.addColumn('number', 'Salary');
-			data.addColumn('boolean', 'Full Time Employee');
-			data.addRows([
-			  ['Mike',  {v: 10000, f: '$10,000'}, true],
-			  ['Jim',   {v:8000,   f: '$8,000'},  false],
-			  ['Alice', {v: 12500, f: '$12,500'}, true],
-			  ['Bob',   {v: 7000,  f: '$7,000'},  true]
-			]);
-
-			// var table = new google.visualization.Table(document.getElementById('table_div'));
-
-			// table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-		}
+		chart_div.draw(data, options);
 	}
 
+	$scope.update = function(){
+		$scope.selectedTrace = $scope.selectedTrace;
+		google.charts.setOnLoadCallback(drawBasic);
+    }
 
-
-})();
+}})();

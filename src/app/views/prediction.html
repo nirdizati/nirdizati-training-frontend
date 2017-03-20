@@ -1,12 +1,12 @@
-<div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
+<div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div" ng-controller="PredictionController">
     <!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
     <md-toolbar class="md-table-toolbar md-default">
-    <div class="md-toolbar-tools" ng-controller="PredictionController">
+    <div class="md-toolbar-tools">
         <span>Predictions : {{selectedLog}}</span>
     </div>
     </md-toolbar>
 
-    <form ng-controller="PredictionController">
+    <form>
       <div class="button-toolbar" layout="row" layout-align="end center">
           <button class="md-primary" ng-click="train()">Train And Predict</button>
       </div>
@@ -28,13 +28,15 @@
           <button class="md-primary" ng-click="submit()">Upload</button>
       </div> -->
 
-<!--       <div layout-gt-md="row">
+      <div layout-gt-md="row">
         <panel-widget flex title="General Results" class="fixed-height-widget">
           <div id="table_div" style="width: 90%;"></div>
         </panel-widget>
-        <panel-widget flex title="Evaluation Graph" class="fixed-height-widget"></panel-widget>
+        <panel-widget flex title="Evaluation Graph" class="fixed-height-widget">
+
+        </panel-widget>
       </div>
- -->
+
       <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
         <md-option ng-repeat="value in traces" ng-value="value">
           Trace {{value}}
