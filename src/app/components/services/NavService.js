@@ -19,11 +19,11 @@
         icon: 'timeline',
         sref: '.prediction'
       },
-      // {
-      //   name: 'Logs',
-      //   icon: 'description',
-      //   sref: '.logs'
-      // }
+      {
+        name: 'Logs',
+        icon: 'description',
+        sref: '.logs'
+      }
     ];
 
     return {
