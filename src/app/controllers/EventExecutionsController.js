@@ -40,10 +40,10 @@
 
             var options = {
               hAxis: {
-                title: 'Event'
+                title: 'Number of Executions'
               },
               vAxis: {
-                title: 'Number of Executions'
+                title: 'Events'
               }
             };
 
