@@ -34,8 +34,8 @@
 	    );
   		LogsService.get({'log': selectedLog}, function(result) {
   			console.log("encoding the file");
-  			Prediction.save({}, function(result){
-  				console.log("training and making the prediction");
+  			Prediction.save({name: selectedLog}, function(result){
+  				consle.lg("training and making the prediction");
   				location.reload();
   			});
   		});
