@@ -208,10 +208,10 @@
 
 		var options = {
 			hAxis: {
-			  title: 'Time (seconds)'
+			  title: 'Time (hours)'
 			},
 			vAxis: {
-			  title: 'Error (seconds)'
+			  title: 'Error (hours)'
 			}
 		};
 
