@@ -87,7 +87,7 @@
 		var generalres = PredictionGeneral.get({}, function(result) {
 			table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
 			table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
-			table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
+			// table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
 			table_values.push(["XGBoost - 2000 Trees", result.RMSE.XG_2000, result.MAE.XG_2000]);
 			data.addRows(table_values);
 			table.draw(data, {width: '100%', height: '100%'});
@@ -103,7 +103,7 @@
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', 'Point in Time');
 		data.addColumn('number', 'Actual Remaining Time');
-		data.addColumn('number', 'Predicted - Linear Regression');
+		// data.addColumn('number', 'Predicted - Linear Regression');
 		data.addColumn('number', 'Predicted - XGBoost');
 		data.addColumn('number', 'Predicted - Random Forest');
 		data.addColumn('number', 'Predicted - Lasso');
@@ -128,7 +128,7 @@
 			       // remainingTime.push(result.remaining_time[key]);
 			       // prediction.push(result.LM_pred[key]);
 			       values.push([i++,result.remaining_time[key],
-			        result.LM_pred[key],
+			        // result.LM_pred[key],
 			        result.XG_2000[key],
 			        result.RF_50[key],
 			        result.Lasso[key]]);
@@ -170,8 +170,8 @@
 		dataRMSE.addColumn('number', 'Lasso');
 		dataMAE.addColumn('number', 'Lasso');
 
-		dataRMSE.addColumn('number', 'LM');
-		dataMAE.addColumn('number', 'LM');
+		// dataRMSE.addColumn('number', 'LM');
+		// dataMAE.addColumn('number', 'LM');
 
 		dataRMSE.addColumn('number', 'RF');
 		dataMAE.addColumn('number', 'RF');
@@ -189,12 +189,12 @@
 			for(var i = 0; i < Object.keys(resRangeList).length; i++){
 				valuesMAE.push([resRangeList[i],
 					resData[i].MAE.Lasso,
-					resData[i].MAE.LM_pred,
+					// resData[i].MAE.LM_pred,
 					resData[i].MAE.RF_50,
 					resData[i].MAE.XG_2000]);
 				valuesRMSE.push([resRangeList[i],
 					resData[i].RMSE.Lasso,
-					resData[i].RMSE.LM_pred,
+					// resData[i].RMSE.LM_pred,
 					resData[i].RMSE.RF_50,
 					resData[i].RMSE.XG_2000]);
 			}
