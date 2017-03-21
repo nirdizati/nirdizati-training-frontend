@@ -144,7 +144,7 @@
 			  title: 'Point in Time'
 			},
 			vAxis: {
-			  title: 'Remaining Time (sec)'
+			  title: 'Remaining Time (hours)'
 			}
 		};
 
