@@ -11,6 +11,10 @@ app.service('PredictionResults', function ($resource, PredictionLink) {
   return $resource(PredictionLink.link+'services/results', {});
 });
 
+app.service('PredictionGeneral', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'services/general', {});
+});
+
 app.service('PredictionEvaluation', function ($resource, PredictionLink) {
   return $resource(PredictionLink.link+'services/evaluation', {});
 });

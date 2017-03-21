@@ -11,12 +11,13 @@
       'Prediction',
       'LogsService',
       'PredictionEvaluation',
+      'PredictionGeneral',
       '$mdDialog',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, $mdDialog, googlechart) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, googlechart) {
 
 
     var selectedLog = $cookies.get('selectedLog');
@@ -83,7 +84,7 @@
 		data.addColumn('number', 'MAE');
 
 		table_values = [];
-		var evaluationRes = PredictionEvaluation.get({}, function(result) {
+		var generalres = PredictionGeneral.get({}, function(result) {
 			table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
 			table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
 			table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
@@ -156,5 +157,69 @@
 		$scope.selectedTrace = $scope.selectedTrace;
 		google.charts.setOnLoadCallback(drawBasic);
     }
+
+
+    google.charts.setOnLoadCallback(drawEval);
+
+	function drawEval() {
+		var dataRMSE = new google.visualization.DataTable();
+		var dataMAE = new google.visualization.DataTable();
+		dataRMSE.addColumn('string', 'Intervals');
+		dataMAE.addColumn('string', 'Intervals');
+
+		dataRMSE.addColumn('number', 'Lasso');
+		dataMAE.addColumn('number', 'Lasso');
+
+		dataRMSE.addColumn('number', 'LM');
+		dataMAE.addColumn('number', 'LM');
+
+		dataRMSE.addColumn('number', 'RF');
+		dataMAE.addColumn('number', 'RF');
+
+		dataRMSE.addColumn('number', 'XGBoost');
+		dataMAE.addColumn('number', 'XGBoost');
+
+		valuesMAE = []
+		valuesRMSE = []
+
+		var predictionRes = PredictionEvaluation.get({}, function(result) {
+			resData = result.data
+			resRangeList = result.intervals
+
+			for(var i = 0; i < Object.keys(resRangeList).length; i++){
+				valuesMAE.push([resRangeList[i],
+					resData[i].MAE.Lasso,
+					resData[i].MAE.LM_pred,
+					resData[i].MAE.RF_50,
+					resData[i].MAE.XG_2000]);
+				valuesRMSE.push([resRangeList[i],
+					resData[i].RMSE.Lasso,
+					resData[i].RMSE.LM_pred,
+					resData[i].RMSE.RF_50,
+					resData[i].RMSE.XG_2000]);
+			}
+
+			dataMAE.addRows(valuesMAE)
+			dataRMSE.addRows(valuesRMSE)
+            
+            eval_div_mae.draw(dataMAE, options);
+            eval_div_rmse.draw(dataRMSE, options);
+        });
+
+		var options = {
+			hAxis: {
+			  title: 'Time (seconds)'
+			},
+			vAxis: {
+			  title: 'Error (seconds)'
+			}
+		};
+
+		var eval_div_mae = new google.visualization.LineChart(document.getElementById('eval_div_mae'));
+		eval_div_mae.draw(dataMAE, options);
+
+		var eval_div_rmse = new google.visualization.LineChart(document.getElementById('eval_div_rmse'));
+		eval_div_rmse.draw(dataRMSE, options);
+	}
 
 }})();
