@@ -32,6 +32,7 @@
                 }
 
                 data.addRows(eventRes);
+                console.log(eventRes);
                 // $scope.data = data;
                 chart.draw(data, options);
 
