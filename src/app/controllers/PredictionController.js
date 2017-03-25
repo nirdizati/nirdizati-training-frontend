@@ -186,7 +186,9 @@
 			resData = result.data
 			resRangeList = result.intervals
 
-			for(var i = 0; i < Object.keys(resRangeList).length; i++){
+			var keys = Object.keys(resRangeList);
+			for(var key in keys){
+				var i = keys[key];
 				valuesMAE.push([resRangeList[i],
 					resData[i].MAE.Lasso,
 					// resData[i].MAE.LM_pred,
