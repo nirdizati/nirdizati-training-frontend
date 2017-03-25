@@ -37,7 +37,7 @@
   		LogsService.get({'log': selectedLog}, function(result) {
   			console.log("encoding the file");
   			Prediction.save({name: selectedLog}, function(result){
-  				consle.lg("training and making the prediction");
+  				console.log("training and making the prediction");
   				location.reload();
   			});
   		});
@@ -84,7 +84,7 @@
 		data.addColumn('number', 'MAE');
 
 		table_values = [];
-		var generalres = PredictionGeneral.get({}, function(result) {
+		var generalres = PredictionGeneral.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
 			table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
 			table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
 			// table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
@@ -110,7 +110,7 @@
 
 		values = []
 
-		var predictionRes = PredictionResults.get({}, function(result) {
+		var predictionRes = PredictionResults.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
 			console.log(result);
         	var ids = Object.values(result.id);
         	ids = ids.filter(onlyUnique);
@@ -182,7 +182,7 @@
 		valuesMAE = []
 		valuesRMSE = []
 
-		var predictionRes = PredictionEvaluation.get({}, function(result) {
+		var predictionRes = PredictionEvaluation.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
 			resData = result.data
 			resRangeList = result.intervals
 
