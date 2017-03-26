@@ -26,18 +26,23 @@
     $scope.selectedLog = selectedLog;
   	$scope.train = function() {
   		console.log("train");
-  		$mdDialog.show(
-	      $mdDialog.alert()
-	        .parent(angular.element(document.querySelector('#prediction_div')))
-	        .clickOutsideToClose(true)
-	        .title('Encoding and Training')
-	        .textContent('Training and Evaluation in progress. This page will automatically refresh when done.')
-	        .ok('Got it!')
-	    );
+  		$mdDialog.show({
+  			template:
+  			'<div style="height:200px; width:500px;">'+
+  			'<center>'+
+  			'Currently Encoding, Training and Evaluating'+
+  			'<br/><small>Page will automatically refresh once done.</small>'+
+  			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
+  			'<br/><small>Please Wait...</small>'+
+  			'</center>'+
+  			'</div>'}
+	    )
+	    $scope.loading = true;
   		LogsService.get({'log': selectedLog}, function(result) {
   			console.log("encoding the file");
   			Prediction.save({name: selectedLog}, function(result){
   				console.log("training and making the prediction");
+  				$scope.loading = false;
   				location.reload();
   			});
   		});
