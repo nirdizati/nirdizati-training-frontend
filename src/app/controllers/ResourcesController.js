@@ -6,6 +6,7 @@
         ]);
 
     function ResourcesController(ResourcesLoadService, $scope, googlechart, $cookies, $cookieStore) {
+        $scope.loading = true;
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
@@ -33,6 +34,7 @@
 
                 data.addRows(resData);
                 // $scope.data = data;
+                $scope.loading = false;
                 chart.draw(data, options);
 
             }); 
@@ -50,7 +52,7 @@
 
             var chart = new google.visualization.LineChart(document.getElementById('resources_chart'));
 
-            chart.draw(data, options);
+            // chart.draw(data, options);
 
         }
     }

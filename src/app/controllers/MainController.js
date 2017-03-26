@@ -6,10 +6,11 @@
           'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
           '$state', '$mdToast', 'LogsService', '$scope',
           'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
+          '$interval',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService, LogsList, $cookies, $cookieStore, $window) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, WorkloadService, LogsList, $cookies, $cookieStore, $interval, $window) {
     var vm = this;
 
     vm.menuItems = [ ];

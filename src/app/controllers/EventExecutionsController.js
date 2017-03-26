@@ -1,11 +1,13 @@
 (function () {
     angular
         .module('app')
-        .controller('EventExecutionsController', ['EventExecutionService', '$scope','$cookies', '$cookieStore',
+        .controller('EventExecutionsController', ['EventExecutionService', '$scope','$cookies', '$cookieStore', '$interval',
             EventExecutionsController
         ]);
 
-    function EventExecutionsController(EventExecutionsService, $scope, googlechart, $cookies, $cookieStore) {
+    function EventExecutionsController(EventExecutionsService, $scope, googlechart, $cookies, $cookieStore, $interval) {
+
+        $scope.loading = true;
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
@@ -34,8 +36,8 @@
                 data.addRows(eventRes);
                 console.log(eventRes);
                 // $scope.data = data;
+                $scope.loading = false;
                 chart.draw(data, options);
-
             }); 
 
 
@@ -50,7 +52,7 @@
 
             var chart = new google.visualization.BarChart(document.getElementById('events_chart'));
 
-            chart.draw(data, options);
+            // chart.draw(data, options);
 
         }
     }

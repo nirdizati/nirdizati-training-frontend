@@ -6,6 +6,7 @@
         ]);
 
     function TracesController(WorkloadService, $scope, googlechart, $cookies, $cookieStore) {
+        $scope.loading = true;
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
         }
@@ -33,6 +34,7 @@
 
                 data.addRows(values);
                 // $scope.data = data;
+                $scope.loading = false;
                 chart.draw(data, options);
 
             }); 
@@ -50,7 +52,7 @@
 
             var chart = new google.visualization.LineChart(document.getElementById('traces_chart'));
 
-            chart.draw(data, options);
+            // chart.draw(data, options);
 
         }
     }
