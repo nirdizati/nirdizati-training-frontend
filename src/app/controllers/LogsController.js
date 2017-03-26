@@ -7,10 +7,11 @@
       'LogsService',
       'Upload',
       'BackEnd',
+      '$mdDialog',
       LogsController
     ]);
 
-  function LogsController($scope, LogsService, Upload, BackEnd) {
+  function LogsController($scope, LogsService, Upload, BackEnd, $mdDialog) {
 
     	$scope.submit = function() {
   	  	if ($scope.file) {
