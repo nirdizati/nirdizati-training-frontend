@@ -13,19 +13,37 @@
       'PredictionEvaluation',
       'PredictionGeneral',
       '$mdDialog',
+      '$cookieStore',
       PredictionController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, googlechart) {
+  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
 
 
     var selectedLog = $cookies.get('selectedLog');
     selectedLog = selectedLog.replace(/['"]+/g, '');
 
     $scope.selectedLog = selectedLog;
+
+    $scope.levels = ['Level0', 'Level1', 'Level2', 'Level3'];
+	if(!$cookies.get('selectedLevel')){
+		$scope.selectedLevel = 'Level3';
+		$cookieStore.put('selectedLevel', $scope.selectedLevel);
+	}
+	else{
+		selectedLevel = $cookies.get('selectedLevel');
+		selectedLevel = selectedLevel.replace(/['"]+/g, '');
+		$scope.selectedLevel = selectedLevel;
+	}
+
+	$scope.levelChange = function() {
+		$cookieStore.put('selectedLevel', $scope.selectedLevel);
+		location.reload();
+	}
+
   	$scope.train = function() {
-  		console.log("train");
+  		console.log("train: "+ $scope.selectedLevel);
   		$mdDialog.show({
   			template:
   			'<div style="height:200px; width:500px;">'+
@@ -40,7 +58,7 @@
 	    $scope.loading = true;
   		LogsService.get({'log': selectedLog}, function(result) {
   			console.log("encoding the file");
-  			Prediction.save({name: selectedLog}, function(result){
+  			Prediction.save({name: selectedLog, 'level': $scope.selectedLevel}, function(result){
   				console.log("training and making the prediction");
   				$scope.loading = false;
   				location.reload();
@@ -66,7 +84,7 @@
 		data.addColumn('number', 'MAE');
 
 		table_values = [];
-		var generalres = PredictionGeneral.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
+		var generalres = PredictionGeneral.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
 			table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
 			table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
 			// table_values.push(["Linear Regression", result.RMSE.LM_pred, result.MAE.LM_pred]);
@@ -92,7 +110,7 @@
 
 		values = []
 
-		var predictionRes = PredictionResults.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
+		var predictionRes = PredictionResults.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
 			console.log(result);
         	var ids = Object.values(result.id);
         	ids = ids.filter(onlyUnique);
@@ -124,7 +142,7 @@
 				.parent(angular.element(document.querySelector('#prediction_div')))
 				.clickOutsideToClose(true)
 				.title('No Results Available for this Log')
-				.textContent('Please click on Train and Predict button')
+				.textContent('Please select Level of prediction and then click on Train and Predict button')
 				.ok('Got it!')
 			);
 		});
@@ -172,7 +190,7 @@
 		valuesMAE = []
 		valuesRMSE = []
 
-		var predictionRes = PredictionEvaluation.get({file:"Level3"+$scope.selectedLog+".csv"}, function(result) {
+		var predictionRes = PredictionEvaluation.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
 			resData = result.data
 			resRangeList = result.intervals
 

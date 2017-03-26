@@ -5,11 +5,16 @@
         <span>Predictions : {{selectedLog}}</span>
     </div>
     <div class="md-toolbar-tools">
-        <small>**The current results are showing the Level 3 Predictions of this log.</small>
+        <small>**If results are available, there is no need to retrain and reevaluate the data.</small>
     </div>
     </md-toolbar>
 
     <form>
+      <md-select ng-model="selectedLevel" placeholder="Select Level" ng-change="levelChange()">
+        <md-option ng-repeat="level in levels" ng-value="level">
+          {{level}}
+        </md-option>
+      </md-select>
       <div class="button-toolbar" layout="row" layout-align="end center">
           <button class="md-primary" ng-click="train()">Train And Predict</button>
       </div>
