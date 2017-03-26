@@ -24,8 +24,24 @@
               url: BackEnd.link+'logs/uploadFile',
               data: {file: file, 'name': $scope.log.name, 'description': $scope.log.description}
           }).then(function (resp) {
+            $mdDialog.show(
+              $mdDialog.alert()
+              .parent(angular.element(document.querySelector('#logs_div')))
+              .clickOutsideToClose(true)
+              .title('Upload Successful')
+              .textContent('Please go to the dashboard page and select this log.')
+              .ok('Ok')
+            );
               console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
           }, function (resp) {
+            $mdDialog.show(
+              $mdDialog.alert()
+              .parent(angular.element(document.querySelector('#logs_div')))
+              .clickOutsideToClose(true)
+              .title('Upload Failed')
+              .textContent('There might be something wrong with the file you are uploading. Please try again.')
+              .ok('Ok')
+            );
               console.log('Error status: ' + resp.status);
           }, function (evt) {
               var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
