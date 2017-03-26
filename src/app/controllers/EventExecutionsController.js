@@ -1,11 +1,11 @@
 (function () {
     angular
         .module('app')
-        .controller('EventExecutionsController', ['EventExecutionService', '$scope','$cookies', '$cookieStore', '$interval',
+        .controller('EventExecutionsController', ['EventExecutionService', '$scope','$cookies', '$cookieStore', '$mdDialog',
             EventExecutionsController
         ]);
 
-    function EventExecutionsController(EventExecutionsService, $scope, googlechart, $cookies, $cookieStore, $interval) {
+    function EventExecutionsController(EventExecutionsService, $scope, googlechart, $cookies, $cookieStore,  $mdDialog) {
 
         $scope.loading = true;
         function onlyUnique(value, index, self) { 
@@ -38,6 +38,15 @@
                 // $scope.data = data;
                 $scope.loading = false;
                 chart.draw(data, options);
+            }, function(error) {
+                $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#dashboard_div')))
+                    .clickOutsideToClose(true)
+                    .title('Error happened: Event Executions')
+                    .textContent('The formatting of the log file is not compatible with this tool')
+                    .ok('Ok')
+                );
             }); 
 
 

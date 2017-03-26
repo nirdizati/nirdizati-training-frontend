@@ -1,11 +1,11 @@
 (function () {
     angular
         .module('app')
-        .controller('TracesController', ['WorkloadService', '$scope', '$cookies', '$cookieStore',
+        .controller('TracesController', ['WorkloadService', '$scope', '$cookies', '$cookieStore', '$mdDialog',
             TracesController
         ]);
 
-    function TracesController(WorkloadService, $scope, googlechart, $cookies, $cookieStore) {
+    function TracesController(WorkloadService, $scope, googlechart, $cookies, $cookieStore, $mdDialog) {
         $scope.loading = true;
         function onlyUnique(value, index, self) { 
           return self.indexOf(value) === index;
@@ -37,7 +37,16 @@
                 $scope.loading = false;
                 chart.draw(data, options);
 
-            }); 
+            }, function(error) {
+                $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#dashboard_div')))
+                    .clickOutsideToClose(true)
+                    .title('Error happened: Traces')
+                    .textContent('The formatting of the log file is not compatible with this tool')
+                    .ok('Ok')
+                );
+            });
 
 
             var options = {
