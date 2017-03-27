@@ -24,31 +24,24 @@
     <panel-widget flex title="Number of Traces" class="fixed-height-widget">
       <md-content class="md-padding" ng-controller="TracesController">
         <center><md-progress-circular md-mode="indeterminate" ng-show="loading" md-diameter="50"></md-progress-circular></center>
-        <div id="traces_chart" style="width: 90%;"></div>
+        <div id="traces_chart" style="width: 100%;"></div>
       </md-content>
     </panel-widget>
+  </div>
+  <div layout-gt-md="row">
     <panel-widget flex title="Number of Resources" class="fixed-height-widget">
       <md-content class="md-padding" ng-controller="ResourcesController">
         <center><md-progress-circular md-mode="indeterminate" ng-show="loading" md-diameter="50"></md-progress-circular></center>
-        <div id="resources_chart" style="width: 90%;"></div>
+        <div id="resources_chart" style="width: 100%;"></div>
       </md-content>
     </panel-widget>
+  </div>
+  <div layout-gt-md="row">
     <panel-widget flex title="Most Executed Events" class="fixed-height-widget">
       <md-content class="md-padding" ng-controller="EventExecutionsController">
         <center><md-progress-circular md-mode="indeterminate" ng-show="loading" md-diameter="50"></md-progress-circular></center>
-        <div id="events_chart" style="width: 90%;"></div>
+        <div id="events_chart" style="width: 100%;"></div>
       </md-content>
     </panel-widget>
-  </div>
-
-  <div layout-gt-md="row"><!-- 
-    <panel-widget flex title="Server Control Panel" template="app/views/partials/controlPanel.html" class="fixed-height-widget"></panel-widget>
-    <panel-widget flex title="Usage Stats" template="app/views/partials/usage.html" class="fixed-height-widget"></panel-widget>
-    <panel-widget flex title="Autocomplete Input" template="app/views/partials/autocomplete.html" options="true" class="fixed-height-widget"></panel-widget> -->
-  </div>
-
-  <div layout-gt-md="row">
-    <!-- <panel-widget flex title="Events" template="app/views/partials/eventexecutions.html" class="fixed-height-widget"></panel-widget> -->
-    <!-- <panel-widget flex title="TODO list" template="app/views/partials/checkboxes.html"></panel-widget> -->
   </div>
 </div>

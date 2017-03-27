@@ -94,7 +94,7 @@
 		});
 
 		var table = new google.visualization.Table(document.getElementById('table_div'));
-		table.draw(data, {width: '100%', height: '100%'});
+
 	}
 
 	google.charts.setOnLoadCallback(drawBasic);
@@ -158,7 +158,7 @@
 
 		var chart_div = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-		chart_div.draw(data, options);
+		// chart_div.draw(data, options);
 	}
 
 	$scope.update = function(){
@@ -226,10 +226,8 @@
 		};
 
 		var eval_div_mae = new google.visualization.LineChart(document.getElementById('eval_div_mae'));
-		eval_div_mae.draw(dataMAE, options);
 
 		var eval_div_rmse = new google.visualization.LineChart(document.getElementById('eval_div_rmse'));
-		eval_div_rmse.draw(dataRMSE, options);
 	}
 
 }})();

@@ -40,23 +40,26 @@
         <panel-widget flex title="General Results" class="fixed-height-widget">
             <div id="table_div" style="width: 90%;"></div>
         </panel-widget>
+      </div>
+      <div layout-gt-md="row">
         <panel-widget flex title="Evaluation Graph MAE" class="fixed-height-widget">
             <div id="eval_div_mae" style="width: 90%"></div>
         </panel-widget>
+      </div>
+      <div layout-gt-md="row">
         <panel-widget flex title="Evaluation Graph RMSE" class="fixed-height-widget">
             <div id="eval_div_rmse" style="width: 90%"></div>
         </panel-widget>
       </div>
-
       <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
         <md-option ng-repeat="value in traces" ng-value="value">
           Trace {{value}}
         </md-option>
       </md-select>
-
       <div layout-gt-md="row">
-<!--         <div google-chart chart="predictionChart" style="height:600px; width:100%;"></div> -->
-        <div id="chart_div" style="width: 100%; height: 500px"></div>
+        <panel-widget flex title="Per Trace Results" class="fixed-height-widget">
+          <div id="chart_div" style="width: 90%;"></div>
+        </panel-widget>
       </div>
     </form>
 </div>
