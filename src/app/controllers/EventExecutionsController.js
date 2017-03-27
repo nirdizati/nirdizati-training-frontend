@@ -59,11 +59,11 @@
               },
               vAxis: {
                 title: 'Events',
-                textPosition : 'in',
                 textStyle : {
                     fontSize: 7 // or the number you want
                 }
-              }
+              },
+              chartArea: {left:200} 
             };
 
             var chart = new google.visualization.BarChart(document.getElementById('events_chart'));
