@@ -51,8 +51,7 @@
               legend: 'none',
               hAxis: {
                 format: 'dd-MM-yy',
-                title: 'Date',
-                textPosition : 'in'
+                title: 'Date'
               },
               vAxis: {
                 title: 'Active Traces',
