@@ -29,6 +29,7 @@
                 var i = 0;
 
                 for (var key in result) {
+                    if(key.startsWith("$") || key.startsWith("toJSON")) continue;
                     var val = result[key];
                     eventRes.push([key, Number(val)]);
                 }
@@ -51,11 +52,17 @@
 
 
             var options = {
+              legend: 'none',
+              height: 1000,
               hAxis: {
                 title: 'Number of Executions'
               },
               vAxis: {
-                title: 'Events'
+                title: 'Events',
+                textPosition : 'in',
+                textStyle : {
+                    fontSize: 7 // or the number you want
+                }
               }
             };
 

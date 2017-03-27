@@ -102,11 +102,11 @@
 	function drawBasic() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', 'Point in Time');
-		data.addColumn('number', 'Actual Remaining Time');
+		data.addColumn('number', 'Actual');
 		// data.addColumn('number', 'Predicted - Linear Regression');
-		data.addColumn('number', 'Predicted - XGBoost');
-		data.addColumn('number', 'Predicted - Random Forest');
-		data.addColumn('number', 'Predicted - Lasso');
+		data.addColumn('number', 'XGBoost');
+		data.addColumn('number', 'Random Forest');
+		data.addColumn('number', 'Lasso');
 
 		values = []
 

@@ -50,6 +50,7 @@
 
 
             var options = {
+              legend: 'none',
               hAxis: {
                 format: 'dd-MM-yy',
                 title: 'Date'

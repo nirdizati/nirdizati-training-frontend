@@ -48,9 +48,11 @@
             });
 
             var options = {
+              legend: 'none',
               hAxis: {
                 format: 'dd-MM-yy',
-                title: 'Date'
+                title: 'Date',
+                textPosition : 'in'
               },
               vAxis: {
                 title: 'Active Traces',
