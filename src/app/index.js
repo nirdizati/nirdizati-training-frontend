@@ -20,24 +20,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Dashboard'
         }
       })
-      .state('home.profile', {
-        url: '/profile',
-        templateUrl: 'app/views/profile.html',
-        controller: 'ProfileController',
-        controllerAs: 'vm',
-        data: {
-          title: 'Profile'
-        }
-      })
-      .state('home.table', {
-        url: '/table',
-        controller: 'TableController',
-        controllerAs: 'vm',
-        templateUrl: 'app/views/table.html',
-        data: {
-          title: 'Table'
-        }
-      })
       .state('home.prediction', {
         url: '/prediction',
         controller: 'PredictionController',
@@ -83,20 +65,20 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     });
 
     $mdThemingProvider.definePalette('defaultPrimary', {
-      '50':  '#FFFFFF',
-      '100': 'rgb(255, 198, 197)',
-      '200': '#E75753',
-      '300': '#E75753',
-      '400': '#E75753',
-      '500': '#E75753',
-      '600': '#E75753',
-      '700': '#E75753',
-      '800': '#E75753',
-      '900': '#E75753',
-      'A100': '#E75753',
-      'A200': '#E75753',
-      'A400': '#E75753',
-      'A700': '#E75753'
+      '50':  '#E8EAF6',
+      '100': '#C5CAE9',
+      '200': '#9FA8DA',
+      '300': '#7986CB',
+      '400': '#5C6BC0',
+      '500': '#3F51B5',
+      '600': '#3949AB',
+      '700': '#303F9F',
+      '800': '#283593',
+      '900': '#1A237E',
+      'A100': '#8C9EFF',
+      'A200': '#536DFE',
+      'A400': '#3D5AFE',
+      'A700': '#304FFE'
     });
 
     $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
