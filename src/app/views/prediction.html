@@ -1,3 +1,7 @@
 <div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
-
+  <md-select ng-model="selectedPrediction" placeholder="Select Prediction Method" ng-change="updateMethod()">
+    <md-option ng-repeat="(key, value) in methods" ng-value="key">
+      {{value}}
+    </md-option>
+  </md-select>
 </div>

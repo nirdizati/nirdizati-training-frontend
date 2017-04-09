@@ -22,11 +22,38 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       })
       .state('home.prediction', {
         url: '/prediction',
-        controller: 'PredictionController',
+        controller: 'PredictionMethodController',
         controllerAs: 'vm',
         templateUrl: 'app/views/prediction.html',
         data: {
+          title: 'Prediction Method'
+        }
+      })
+      .state('home.prediction-intercase', {
+        url: '/prediction/intercase',
+        controller: 'PredictionController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/intercase.html',
+        data: {
           title: 'Prediction'
+        }
+      })
+      .state('home.prediction-classification', {
+        url: '/prediction/classification',
+        controller: 'ClassificationController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/classification.html',
+        data: {
+          title: 'Classification'
+        }
+      })
+      .state('home.prediction-forecasting', {
+        url: '/prediction/forecasting',
+        controller: 'ForecastingController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/forecasting.html',
+        data: {
+          title: 'Forecasting'
         }
       })
       .state('home.logs', {
