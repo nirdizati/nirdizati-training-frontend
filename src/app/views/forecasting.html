@@ -1,2 +1,18 @@
-<div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
+<div id="forecasting" ng-controller="ForecastingController" id="forecasting_div">
+  <div layout-gt-md="row">
+    <panel-widget flex title="Number of Traces" class="fixed-height-widget">
+      <md-content class="md-padding">
+        <center><md-progress-circular md-mode="indeterminate" ng-show="loading" md-diameter="50"></md-progress-circular></center>
+        <div id="traces_forecasting_chart" style="width: 100%;"></div>
+      </md-content>
+    </panel-widget>
+  </div>
+  <div layout-gt-md="row">
+    <panel-widget flex title="Number of Resources" class="fixed-height-widget">
+      <md-content class="md-padding">
+        <center><md-progress-circular md-mode="indeterminate" ng-show="loading" md-diameter="50"></md-progress-circular></center>
+        <div id="resources_forecasting_chart" style="width: 100%;"></div>
+      </md-content>
+    </panel-widget>
+  </div>
 </div>

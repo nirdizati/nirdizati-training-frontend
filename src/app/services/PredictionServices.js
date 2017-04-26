@@ -18,3 +18,11 @@ app.service('PredictionGeneral', function ($resource, PredictionLink) {
 app.service('PredictionEvaluation', function ($resource, PredictionLink) {
   return $resource(PredictionLink.link+'services/evaluation', {});
 });
+
+app.service('ForecastingArmaLoad', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'forecasting/workload', {});
+});
+
+app.service('ForecastingArmaResources', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'forecasting/resources', {});
+});
