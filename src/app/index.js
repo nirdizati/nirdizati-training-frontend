@@ -15,6 +15,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       })
       .state('home.dashboard', {
         url: '/dashboard',
+        controller: 'DashboardController',
+        controllerAs: 'vm',
         templateUrl: 'app/views/dashboard.html',
         data: {
           title: 'Dashboard'
@@ -29,6 +31,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Prediction Method'
         }
       })
+      //time based predictions
       .state('home.prediction-intercase', {
         url: '/prediction/time/intercase',
         controller: 'PredictionController',
@@ -38,6 +41,18 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Prediction'
         }
       })
+      //workload predictions
+      .state('home.prediction-forecasting', {
+        url: '/prediction/workload/timeseries',
+        controller: 'ForecastingController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/forecasting.html',
+        data: {
+          title: 'Forecasting'
+        }
+      })
+      //activity predictions
+      //classification predictions
       .state('home.prediction-classification', {
         url: '/prediction/classification',
         controller: 'ClassificationController',
@@ -45,15 +60,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         templateUrl: 'app/views/classification.html',
         data: {
           title: 'Classification'
-        }
-      })
-      .state('home.prediction-forecasting', {
-        url: '/prediction/forecasting',
-        controller: 'ForecastingController',
-        controllerAs: 'vm',
-        templateUrl: 'app/views/forecasting.html',
-        data: {
-          title: 'Forecasting'
         }
       })
       .state('home.logs', {

@@ -4,8 +4,7 @@
     .module('app')
     .controller('PredictionMethodController', [
       '$scope',
-      'Upload',
-      'PredictionLink',
+      'LogsList',
       '$cookies',
       '$location',
       'Prediction',
@@ -18,8 +17,20 @@
       
     ]);
 
-  function PredictionMethodController($scope, Upload, PredictionLink, $cookies, $location, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
+  function PredictionMethodController($scope, LogsList, $cookies, $location, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
 
+    LogsList.query({}, function(data) {
+      $scope.logs = data;
+      if(!$cookies.get('selectedLog')){
+        $scope.selectedLog = data[0];
+        $cookieStore.put('selectedLog', $scope.selectedLog);
+      }
+      else{
+        selectedLog = $cookies.get('selectedLog');
+        selectedLog = selectedLog.replace(/['"]+/g, '');
+        $scope.selectedLog = selectedLog;
+      }
+    });
 
     $scope.methods = {};
     $scope.selectedPrediction = 0;
@@ -46,8 +57,6 @@
         $scope.methods = classificationMethods;
       }
     }
-
-
 
   	$scope.selectMethod = function() {
       //update log for cookies

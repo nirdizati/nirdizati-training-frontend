@@ -80,31 +80,6 @@
       );
     }
 
-    // LogsService.query({}, function(data) {
-    //   $scope.logs = data;
-    //   console.log(data);
-    // });
-    LogsList.query({}, function(data) {
-      $scope.logs = data;
-      if(!$cookies.get('selectedLog')){
-        $scope.selectedLog = data[0];
-        $cookieStore.put('selectedLog', $scope.selectedLog);
-      }
-      else{
-        selectedLog = $cookies.get('selectedLog');
-        selectedLog = selectedLog.replace(/['"]+/g, '');
-        $scope.selectedLog = selectedLog;
-      }
-      
-      console.log(data);
-    });
-
-    $scope.update = function(){
-      $scope.selectedLog = $scope.selectedLog;
-      $cookieStore.put('selectedLog', $scope.selectedLog);
-      location.reload(); 
-    }
-
   }
 
 })();

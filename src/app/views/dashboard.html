@@ -1,4 +1,4 @@
-<div id="main" ng-controller="MainController" id="dashboard_div">
+<div id="main" ng-controller="DashboardController" id="dashboard_div">
   <md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
   	<div class="md-toolbar-tools">
   		<span>Log:</span>
@@ -17,9 +17,6 @@
   		<md-button href="/logs" class="md-accent">Upload New Log</md-button>
   	</div> -->
   </md-toolbar>
-  <div layout-gt-md="row">
-    <small>**Log uploading is currently disabled.</small>
-  </div>
   <div layout-gt-md="row">
     <panel-widget flex title="Number of Traces" class="fixed-height-widget">
       <md-content class="md-padding" ng-controller="TracesController">
