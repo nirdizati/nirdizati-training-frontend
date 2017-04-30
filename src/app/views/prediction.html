@@ -1,7 +1,50 @@
 <div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
-  <md-select ng-model="selectedPrediction" placeholder="Select Prediction Method" ng-change="updateMethod()">
-    <md-option ng-repeat="(key, value) in methods" ng-value="key">
-      {{value}}
-    </md-option>
-  </md-select>
+	<md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
+		<md-input-container>
+			<h1>Prediction</h1>
+		</md-input-container>
+	</md-toolbar>
+	<md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
+		<div class="md-toolbar-tools">
+			<span>Select Log:</span>
+			<md-input-container>
+			  <md-select ng-model="selectedLog" placeholder="Select Log">
+			    <md-option ng-repeat="log in logs" ng-value="log"">
+			      {{log}}
+			    </md-option>
+			  </md-select>
+			</md-input-container>
+		</div>
+	</md-toolbar>
+	<md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
+		<div class="md-toolbar-tools">
+			<span>Select Type of Prediction:</span>
+		    <md-input-container>
+		    	<md-select ng-model="selectedType" placeholder="Select Type" ng-change="updateMethods()">
+				    <md-option ng-repeat="(key, value) in types" ng-value="key"">
+				      {{value}}
+				    </md-option>
+			  	</md-select>
+			</md-input-container>
+		</div>
+	</md-toolbar>
+	<md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
+		<div class="md-toolbar-tools">
+			<span>Select Method of Prediction:</span>
+		    <md-input-container>
+				<md-select ng-model="selectedPrediction" placeholder="Select Prediction Method" ng-change="updateMethod()">
+					<md-option ng-repeat="(key, value) in methods" ng-value="key">
+						{{value}}
+					</md-option>
+			  	</md-select>
+			</md-input-container>
+		</div>
+	</md-toolbar>
+	<md-toolbar class="md-table-toolbar md-default" layout-gt-md="row">
+		<div class="md-toolbar-tools">
+		      <div class="button-toolbar" layout="row" layout-align="end center">
+		          <button class="md-primary" ng-click="selectMethod()">Submit</button>
+		      </div>
+		</div>
+	</md-toolbar>
 </div>

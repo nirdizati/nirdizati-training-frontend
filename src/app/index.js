@@ -30,7 +30,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         }
       })
       .state('home.prediction-intercase', {
-        url: '/prediction/intercase',
+        url: '/prediction/time/intercase',
         controller: 'PredictionController',
         controllerAs: 'vm',
         templateUrl: 'app/views/intercase.html',
