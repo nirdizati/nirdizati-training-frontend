@@ -1,0 +1,53 @@
+<div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
+    <!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+          <span>Predictions : {{selectedLog}}</span>
+      </div>
+      <div class="md-toolbar-tools">
+          <small>**If results are available, there is no need to retrain and reevaluate the data.</small>
+      </div>
+    </md-toolbar>
+
+    <form>
+      <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools">
+          <span>Select Encoding Level:</span>
+          <md-select ng-model="selectedLevel" placeholder="Select Level" ng-change="levelChange()">
+            <md-option ng-repeat="level in levels" ng-value="level">
+              {{level}}
+            </md-option>
+        </md-select>
+        </div>
+        <div class="button-toolbar" layout="row" layout-align="end center">
+            <button class="md-primary" ng-click="train()">Train And Predict</button>
+        </div>
+        <div layout-gt-md="row">
+          <panel-widget flex title="General Results" class="fixed-height-widget">
+              <div id="table_div" style="width: 90%;"></div>
+          </panel-widget>
+        </div>
+        <div layout-gt-md="row">
+          <panel-widget flex title="Evaluation Graph MAE" class="fixed-height-widget">
+              <div id="eval_div_mae" style="width: 90%"></div>
+          </panel-widget>
+        </div>
+        <div layout-gt-md="row">
+          <panel-widget flex title="Evaluation Graph RMSE" class="fixed-height-widget">
+              <div id="eval_div_rmse" style="width: 90%"></div>
+          </panel-widget>
+        </div>
+        <span>Select Trace:</span>
+        <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
+          <md-option ng-repeat="value in traces" ng-value="value">
+            Trace {{value}}
+          </md-option>
+        </md-select>
+        <div layout-gt-md="row">
+          <panel-widget flex title="Per Trace Results" class="fixed-height-widget">
+            <div id="chart_div" style="width: 90%;"></div>
+          </panel-widget>
+        </div>
+      </md-toolbar>
+    </form>
+</div>

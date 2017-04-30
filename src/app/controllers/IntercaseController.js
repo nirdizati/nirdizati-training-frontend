@@ -2,7 +2,7 @@
 
   angular
     .module('app')
-    .controller('PredictionController', [
+    .controller('IntercaseController', [
       '$scope',
       'Upload',
       'PredictionLink',
@@ -14,11 +14,11 @@
       'PredictionGeneral',
       '$mdDialog',
       '$cookieStore',
-      PredictionController
+      IntercaseController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
+  function IntercaseController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
 
 
     var selectedLog = $cookies.get('selectedLog');

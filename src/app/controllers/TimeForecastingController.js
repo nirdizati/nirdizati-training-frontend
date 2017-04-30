@@ -2,7 +2,7 @@
 
   angular
     .module('app')
-    .controller('PredictionController', [
+    .controller('TimeForecastingController', [
       '$scope',
       'Upload',
       'PredictionLink',
@@ -14,33 +14,16 @@
       'PredictionGeneral',
       '$mdDialog',
       '$cookieStore',
-      PredictionController
+      TimeForecastingController
       
     ]);
 
-  function PredictionController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
-
+  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
 
     var selectedLog = $cookies.get('selectedLog');
     selectedLog = selectedLog.replace(/['"]+/g, '');
 
     $scope.selectedLog = selectedLog;
-
-    $scope.levels = ['Level0', 'Level1', 'Level2', 'Level3'];
-	if(!$cookies.get('selectedLevel')){
-		$scope.selectedLevel = 'Level3';
-		$cookieStore.put('selectedLevel', $scope.selectedLevel);
-	}
-	else{
-		selectedLevel = $cookies.get('selectedLevel');
-		selectedLevel = selectedLevel.replace(/['"]+/g, '');
-		$scope.selectedLevel = selectedLevel;
-	}
-
-	$scope.levelChange = function() {
-		$cookieStore.put('selectedLevel', $scope.selectedLevel);
-		location.reload();
-	}
 
   	$scope.train = function() {
   		console.log("train: "+ $scope.selectedLevel);
