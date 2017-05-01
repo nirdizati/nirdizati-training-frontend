@@ -7,18 +7,18 @@
       'Upload',
       'PredictionLink',
       '$cookies',
-      'PredictionResults',
+      'ForecastingTimeResults',
       'Prediction',
       'LogsService',
-      'PredictionEvaluation',
-      'PredictionGeneral',
+      'ForecastingTimeEvaluation',
+      'ForecastingTimeGeneral',
       '$mdDialog',
       '$cookieStore',
       TimeForecastingController
       
     ]);
 
-  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
+  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, ForecastingTimeResults, Prediction, LogsService, ForecastingTimeEvaluation, ForecastingTimeGeneral, $mdDialog, $cookieStore, googlechart) {
 
     var selectedLog = $cookies.get('selectedLog');
     selectedLog = selectedLog.replace(/['"]+/g, '');
@@ -51,26 +51,24 @@
 
 	$scope.traces = [];
 	$scope.data = [];
-	$scope.selectedTrace = 0;
+	$scope.selectedTrace = 'Case1';
 
 	function onlyUnique(value, index, self) { 
 	    return self.indexOf(value) === index;
 	}
 
     google.charts.load('current', {packages: ['corechart', 'line', 'table']});
-    google.charts.setOnLoadCallback(drawTable);
+    google.charts.setOnLoadCallback(drawGeneral);
 
-	function drawTable() {
+	function drawGeneral() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Prediction Method');
 		data.addColumn('number', 'RMSE');
 		data.addColumn('number', 'MAE');
 
 		table_values = [];
-		var generalres = PredictionGeneral.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
-			table_values.push(["Lasso", result.RMSE.Lasso, result.MAE.Lasso]);
-			table_values.push(["Random Forest - 50 Trees", result.RMSE.RF_50, result.MAE.RF_50]);
-			table_values.push(["XGBoost - 2000 Trees", result.RMSE.XG_2000, result.MAE.XG_2000]);
+		var generalres = ForecastingTimeGeneral.get({log:$scope.selectedLog}, function(result) {
+			table_values.push(["ARMA Timeseries", result.RMSE, result.MAE]);
 			data.addRows(table_values);
 			table.draw(data, {width: '100%', height: '100%'});
 		});
@@ -79,20 +77,18 @@
 
 	}
 
-	google.charts.setOnLoadCallback(drawBasic);
+	google.charts.setOnLoadCallback(drawTrace);
 
-	function drawBasic() {
+	function drawTrace() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', 'Point in Time');
 		data.addColumn('number', 'Actual');
 		// data.addColumn('number', 'Predicted - Linear Regression');
-		data.addColumn('number', 'XGBoost');
-		data.addColumn('number', 'Random Forest');
-		data.addColumn('number', 'Lasso');
+		data.addColumn('number', 'Predicted');
 
 		values = []
 
-		var predictionRes = PredictionResults.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
+		var predictionRes = ForecastingTimeResults.get({log:$scope.selectedLog}, function(result) {
 			console.log(result);
         	var ids = Object.values(result.id);
         	ids = ids.filter(onlyUnique);
@@ -107,13 +103,7 @@
         	Object.keys(result['id']).forEach(function (key) {
 			   if(result.id[key] == $scope.selectedTrace){
 			       trace.push(key);
-			       // remainingTime.push(result.remaining_time[key]);
-			       // prediction.push(result.LM_pred[key]);
-			       values.push([i++,result.remaining_time[key],
-			        // result.LM_pred[key],
-			        result.XG_2000[key],
-			        result.RF_50[key],
-			        result.Lasso[key]]);
+			       values.push([i++,result.remainingTime[key], result.prediction[key]]);
 			   }
 			});
             data.addRows(values);
@@ -124,14 +114,15 @@
 				.parent(angular.element(document.querySelector('#prediction_div')))
 				.clickOutsideToClose(true)
 				.title('No Results Available for this Log')
-				.textContent('Please select Level of prediction and then click on Train and Predict button')
+				.textContent('Please click on Train and Predict button')
 				.ok('Got it!')
 			);
 		});
 
 		var options = {
 			hAxis: {
-			  title: 'Point in Time'
+			  title: 'Point in Time',
+			  format: 0
 			},
 			vAxis: {
 			  title: 'Remaining Time (hours)'
@@ -139,13 +130,11 @@
 		};
 
 		var chart_div = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-		// chart_div.draw(data, options);
 	}
 
 	$scope.update = function(){
 		$scope.selectedTrace = $scope.selectedTrace;
-		google.charts.setOnLoadCallback(drawBasic);
+		google.charts.setOnLoadCallback(drawTrace);
     }
 
 
@@ -157,22 +146,13 @@
 		dataRMSE.addColumn('string', 'Intervals');
 		dataMAE.addColumn('string', 'Intervals');
 
-		dataRMSE.addColumn('number', 'Lasso');
-		dataMAE.addColumn('number', 'Lasso');
-
-		// dataRMSE.addColumn('number', 'LM');
-		// dataMAE.addColumn('number', 'LM');
-
-		dataRMSE.addColumn('number', 'RF');
-		dataMAE.addColumn('number', 'RF');
-
-		dataRMSE.addColumn('number', 'XGBoost');
-		dataMAE.addColumn('number', 'XGBoost');
+		dataRMSE.addColumn('number', 'Prediction');
+		dataMAE.addColumn('number', 'Prediction');
 
 		valuesMAE = []
 		valuesRMSE = []
 
-		var predictionRes = PredictionEvaluation.get({file:$scope.selectedLevel+$scope.selectedLog+".csv"}, function(result) {
+		var predictionRes = ForecastingTimeEvaluation.get({log:$scope.selectedLog}, function(result) {
 			resData = result.data
 			resRangeList = result.intervals
 
@@ -180,15 +160,9 @@
 			for(var key in keys){
 				var i = keys[key];
 				valuesMAE.push([resRangeList[i],
-					resData[i].MAE.Lasso,
-					// resData[i].MAE.LM_pred,
-					resData[i].MAE.RF_50,
-					resData[i].MAE.XG_2000]);
+					resData[i].MAE]);
 				valuesRMSE.push([resRangeList[i],
-					resData[i].RMSE.Lasso,
-					// resData[i].RMSE.LM_pred,
-					resData[i].RMSE.RF_50,
-					resData[i].RMSE.XG_2000]);
+					resData[i].RMSE]);
 			}
 
 			dataMAE.addRows(valuesMAE)
