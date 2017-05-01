@@ -54,7 +54,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         url: '/prediction/time/regression',
         controller: 'TimeRegressionController',
         controllerAs: 'vm',
-        templateUrl: 'app/views/time/timeseries.html',
+        templateUrl: 'app/views/time/regression.html',
         data: {
           title: 'Time Prediction'
         }

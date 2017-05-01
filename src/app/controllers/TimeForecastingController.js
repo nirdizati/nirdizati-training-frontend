@@ -8,7 +8,7 @@
       'PredictionLink',
       '$cookies',
       'ForecastingTimeResults',
-      'Prediction',
+      'TimeseriesEncoding',
       'LogsService',
       'ForecastingTimeEvaluation',
       'ForecastingTimeGeneral',
@@ -18,7 +18,7 @@
       
     ]);
 
-  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, ForecastingTimeResults, Prediction, LogsService, ForecastingTimeEvaluation, ForecastingTimeGeneral, $mdDialog, $cookieStore, googlechart) {
+  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, ForecastingTimeResults, TimeseriesEncoding, LogsService, ForecastingTimeEvaluation, ForecastingTimeGeneral, $mdDialog, $cookieStore, googlechart) {
 
     var selectedLog = $cookies.get('selectedLog');
     selectedLog = selectedLog.replace(/['"]+/g, '');
@@ -26,27 +26,36 @@
     $scope.selectedLog = selectedLog;
 
   	$scope.train = function() {
-  		console.log("train: "+ $scope.selectedLevel);
+  		console.log("train: "+ $scope.selectedLog);
   		$mdDialog.show({
   			template:
   			'<div style="height:200px; width:500px;">'+
   			'<center>'+
-  			'Currently Encoding, Training and Evaluating'+
-  			'<br/><small>Page will automatically refresh once done.</small>'+
+  			'Currently Encoding'+
   			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
   			'<br/><small>Please Wait...</small>'+
   			'</center>'+
   			'</div>'}
 	    )
 	    $scope.loading = true;
-  		LogsService.get({'log': selectedLog}, function(result) {
-  			console.log("encoding the file");
-  			Prediction.save({name: selectedLog, 'level': $scope.selectedLevel}, function(result){
-  				console.log("training and making the prediction");
-  				$scope.loading = false;
-  				location.reload();
-  			});
-  		});
+	    TimeseriesEncoding.query({log: $scope.selectedLog}, function(result){
+	    	$mdDialog.show({
+	  			template:
+	  			'<div style="height:200px; width:500px;">'+
+	  			'<center>'+
+	  			'Currently Training and Evaluating'+
+	  			'<br/><small>Page will automatically refresh once done.</small>'+
+	  			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
+	  			'<br/><small>Please Wait...</small>'+
+	  			'</center>'+
+	  			'</div>'}
+		    )
+	    	ForecastingTimeResults.get({log: $scope.selectedLog}, function(result){
+				console.log("training and making the prediction");
+				$scope.loading = false;
+				location.reload();
+			});
+	    });
   	}
 
 	$scope.traces = [];

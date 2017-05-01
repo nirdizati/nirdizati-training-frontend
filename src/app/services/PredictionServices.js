@@ -33,6 +33,39 @@ app.service('ForecastingTimeResults', function ($resource, PredictionLink) {
 });
 
 
+//regression
+app.service('RegressionLinear', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/linear', {});
+});
+app.service('RegressionRandomForest', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/randomforestregression', {});
+});
+app.service('RegressionXGBoost', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/xgboost', {});
+});
+
+//--general
+app.service('RegressionLinearTimeGeneral', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/generallinear', {});
+});
+app.service('RegressionRandomForestTimeGeneral', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/generalrandomforestregression', {});
+});
+app.service('RegressionXGBoostTimeGeneral', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/generalxgboost', {});
+});
+
+//--evaluation
+app.service('RegressionLinearTimeEvaluation', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/evaluationlinear', {});
+});
+app.service('RegressionRandomForestTimeEvaluation', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/evaluationrandomforestregression', {});
+});
+app.service('RegressionXGBoostTimeEvaluation', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'regression/evaluationxgboost', {});
+});
+
 
 
 //---------------workload predictions------------------------//
