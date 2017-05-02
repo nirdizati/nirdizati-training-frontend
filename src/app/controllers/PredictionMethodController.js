@@ -21,15 +21,6 @@
 
     LogsList.query({}, function(data) {
       $scope.logs = data;
-      if(!$cookies.get('selectedLog')){
-        $scope.selectedLog = data[0];
-        $cookieStore.put('selectedLog', $scope.selectedLog);
-      }
-      else{
-        selectedLog = $cookies.get('selectedLog');
-        selectedLog = selectedLog.replace(/['"]+/g, '');
-        $scope.selectedLog = selectedLog;
-      }
     });
 
     $scope.methods = {};
@@ -59,13 +50,9 @@
     }
 
   	$scope.selectMethod = function() {
-      //update log for cookies
       $scope.selectedLog = $scope.selectedLog;
-      $cookieStore.put('selectedLog', $scope.selectedLog);
-
   		var linkKey = "prediction/"+$scope.selectedType+"/"+$scope.selectedPrediction;
-  		$location.path( linkKey );
-  		// $window.location.href = linkKey;
+  		$location.path( linkKey ).search({log: $scope.selectedLog});;
   	}
 
 }})();

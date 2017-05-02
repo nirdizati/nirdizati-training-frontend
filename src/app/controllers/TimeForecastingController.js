@@ -4,7 +4,7 @@
     .module('app')
     .controller('TimeForecastingController', [
       '$scope',
-      'Upload',
+      '$location',
       'PredictionLink',
       '$cookies',
       'ForecastingTimeResults',
@@ -18,10 +18,10 @@
       
     ]);
 
-  function TimeForecastingController($scope, Upload, PredictionLink, $cookies, ForecastingTimeResults, TimeseriesEncoding, LogsService, ForecastingTimeEvaluation, ForecastingTimeGeneral, $mdDialog, $cookieStore, googlechart) {
+  function TimeForecastingController($scope, $location, PredictionLink, $cookies, ForecastingTimeResults, TimeseriesEncoding, LogsService, ForecastingTimeEvaluation, ForecastingTimeGeneral, $mdDialog, $cookieStore, googlechart) {
 
-    var selectedLog = $cookies.get('selectedLog');
-    selectedLog = selectedLog.replace(/['"]+/g, '');
+  	var params = $location.search();
+  	var selectedLog = params['log'];
 
     $scope.selectedLog = selectedLog;
 
@@ -49,6 +49,7 @@
 	  			'<center>'+
 	  			'Currently Training and Evaluating'+
 	  			'<br/><small>Page will automatically refresh once done.</small>'+
+	  			'<br/><small>Open new tab if you wish to work on other logs.</small>'+
 	  			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
 	  			'<br/><small>Please Wait...</small>'+
 	  			'</center>'+

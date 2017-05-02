@@ -4,7 +4,7 @@
     .module('app')
     .controller('IntercaseController', [
       '$scope',
-      'Upload',
+      '$location',
       'PredictionLink',
       '$cookies',
       'PredictionResults',
@@ -18,11 +18,10 @@
       
     ]);
 
-  function IntercaseController($scope, Upload, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
+  function IntercaseController($scope, $location, PredictionLink, $cookies, PredictionResults, Prediction, LogsService, PredictionEvaluation, PredictionGeneral, $mdDialog, $cookieStore, googlechart) {
 
-
-    var selectedLog = $cookies.get('selectedLog');
-    selectedLog = selectedLog.replace(/['"]+/g, '');
+  	var params = $location.search();
+  	var selectedLog = params['log'];
 
     $scope.isRegression = false;
     $scope.isIntercase = true;
@@ -55,6 +54,7 @@
   			'<center>'+
   			'Currently Encoding, Training and Evaluating'+
   			'<br/><small>Page will automatically refresh once done.</small>'+
+  			'<br/><small>Open new tab if you wish to work on other logs.</small>'+
   			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
   			'<br/><small>Please Wait...</small>'+
   			'</center>'+

@@ -4,7 +4,7 @@
     .module('app')
     .controller('TimeRegressionController', [
       '$scope',
-      '$cookies',
+      '$location',
       'RegressionLinear',
       'RegressionRandomForest',
       'RegressionXGBoost',
@@ -22,10 +22,10 @@
       
     ]);
 
-  function TimeRegressionController($scope, $cookies, RegressionLinear, RegressionRandomForest, RegressionXGBoost, TimeseriesEncoding, LogsService, RegressionLinearTimeEvaluation, RegressionRandomForestTimeEvaluation, RegressionXGBoostTimeEvaluation,RegressionLinearTimeGeneral, RegressionRandomForestTimeGeneral, RegressionXGBoostTimeGeneral,$mdDialog, $cookieStore, googlechart) {
+  function TimeRegressionController($scope, $location, RegressionLinear, RegressionRandomForest, RegressionXGBoost, TimeseriesEncoding, LogsService, RegressionLinearTimeEvaluation, RegressionRandomForestTimeEvaluation, RegressionXGBoostTimeEvaluation,RegressionLinearTimeGeneral, RegressionRandomForestTimeGeneral, RegressionXGBoostTimeGeneral,$mdDialog, $cookieStore, googlechart) {
 
-    var selectedLog = $cookies.get('selectedLog');
-    selectedLog = selectedLog.replace(/['"]+/g, '');
+  	var params = $location.search();
+  	var selectedLog = params['log'];
 
     $scope.selectedLog = selectedLog;
 
@@ -54,12 +54,33 @@
 	  			'<center>'+
 	  			'Currently Training and Evaluating'+
 	  			'<br/><small>Page will automatically refresh once done.</small>'+
+	  			'<br/><small>Open new tab if you wish to work on other logs.</small>'+
 	  			'<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
 	  			'<br/><small>Please Wait...</small>'+
 	  			'</center>'+
 	  			'</div>'}
 		    )
-			updateRegressor();
+			if($scope.selectedRegressor == "Linear"){
+				var predictionRes = RegressionLinear.save({log:$scope.selectedLog}, function(result) {
+					reloadpage();
+		        }, function(error) {
+		        	displayError();
+				});
+			}
+			else if($scope.selectedRegressor == "RandomForest"){
+				var predictionRes = RegressionRandomForest.save({log:$scope.selectedLog}, function(result) {
+					reloadpage();
+		        }, function(error) {
+		        	displayError();
+				});
+			}
+			else if($scope.selectedRegressor == "XGBoost"){
+				var predictionRes = RegressionXGBoost.save({log:$scope.selectedLog}, function(result) {
+					reloadpage();
+		        }, function(error) {
+		        	displayError();
+				});
+			}
 	    });
   	}
 
@@ -93,6 +114,11 @@
 		table_values.push([method, result.RMSE, result.MAE]);
 		data.addRows(table_values);
 		table.draw(data, {width: '100%', height: '100%'});
+	}
+
+	function reloadpage(){
+			$scope.loading = false;
+			location.reload();
 	}
 
 	google.charts.setOnLoadCallback(drawTrace);
