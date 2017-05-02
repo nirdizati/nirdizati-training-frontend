@@ -88,6 +88,9 @@
 	$scope.data = [];
 	$scope.selectedTrace = 'Case1';
 	$scope.selectedRegressor = 'Linear';
+	if("regressor" in params){
+		$scope.selectedRegressor = params['regressor'];
+	}
 
 	$scope.regressors = {"Linear":"Linear","RandomForest":"Random Forest","XGBoost":"XGBoost"};
 
@@ -117,8 +120,10 @@
 	}
 
 	function reloadpage(){
-			$scope.loading = false;
-			location.reload();
+		$scope.loading = false;
+		var linkKey = "prediction/time/regression";
+		$location.path(linkKey).search({log: $scope.selectedLog, regressor: $scope.selectedRegressor});
+		location.reload();
 	}
 
 	google.charts.setOnLoadCallback(drawTrace);
