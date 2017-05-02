@@ -36,7 +36,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         url: '/prediction/time/intercase',
         controller: 'IntercaseController',
         controllerAs: 'vm',
-        templateUrl: 'app/views/time/intercase.html',
+        templateUrl: 'app/views/time/remainingtime.html',
         data: {
           title: 'Time Prediction'
         }
@@ -45,7 +45,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         url: '/prediction/time/timeseries',
         controller: 'TimeForecastingController',
         controllerAs: 'vm',
-        templateUrl: 'app/views/time/timeseries.html',
+        templateUrl: 'app/views/time/remainingtime.html',
         data: {
           title: 'Time Prediction'
         }
@@ -54,7 +54,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         url: '/prediction/time/regression',
         controller: 'TimeRegressionController',
         controllerAs: 'vm',
-        templateUrl: 'app/views/time/regression.html',
+        templateUrl: 'app/views/time/remainingtime.html',
         data: {
           title: 'Time Prediction'
         }

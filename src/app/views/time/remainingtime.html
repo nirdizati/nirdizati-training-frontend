@@ -1,0 +1,75 @@
+<div class="table-responsive-vertical md-whiteframe-z1" id="prediction_div">
+
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+          <span>Predictions : {{selectedLog}}</span>
+      </div>
+      <div class="md-toolbar-tools">
+          <small>**If results are available, there is no need to retrain and reevaluate the data.</small>
+      </div>
+      <div class="md-toolbar-tools" ng-show={{isRegression}}>
+        <span>Select Regression Method:</span>
+        <md-select ng-model="selectedRegressor" placeholder="Select Regressor" ng-change="updateRegressor()">
+          <md-option ng-repeat="(key, value) in regressors" ng-value="key">
+            {{value}}
+          </md-option>
+        </md-select>
+      </div>
+    </md-toolbar>
+
+    <form>
+      <div class="md-toolbar-tools" ng-show={{isIntercase}}>
+        <span>Select Encoding Level:</span>
+        <md-select ng-model="selectedLevel" placeholder="Select Level" ng-change="levelChange()">
+            <md-option ng-repeat="level in levels" ng-value="level">
+              {{level}}
+            </md-option>
+        </md-select>
+      </div>
+      <div class="button-toolbar" layout="row" layout-align="end center">
+          <button class="md-primary" ng-click="train()">Train And Predict</button>
+      </div>
+
+      <div ng-cloak>
+        <md-content>
+          <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="General Results">
+              <md-content class="md-padding">
+                <div layout-gt-md="row">
+                   <div id="table_div" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Evaluation MAE">
+              <md-content class="md-padding">
+                <div layout-gt-md="row">
+                   <div id="eval_div_mae" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Evaluation RMSE">
+              <md-content class="md-padding">
+                <div layout-gt-md="row">
+                   <div id="eval_div_rmse" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Per Trace Results">
+              <md-content class="md-padding">
+                <span>Select Trace:</span>
+                <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
+                  <md-option ng-repeat="value in traces" ng-value="value">
+                    {{value}}
+                  </md-option>
+                </md-select>
+                <span>{{note}}</span>
+                <div layout-gt-md="row">
+                  <div id="chart_div" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+          </md-tabs>
+        </md-content>
+      </div>
+    </form>
+</div>

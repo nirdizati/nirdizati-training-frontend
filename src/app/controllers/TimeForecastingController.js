@@ -25,6 +25,10 @@
 
     $scope.selectedLog = selectedLog;
 
+    $scope.isRegression = false;
+    $scope.isIntercase = false;
+    $scope.isTimeseries = true;
+    $scope.note = 'Note: Predictions are provided after 5 activities are performed';
   	$scope.train = function() {
   		console.log("train: "+ $scope.selectedLog);
   		$mdDialog.show({

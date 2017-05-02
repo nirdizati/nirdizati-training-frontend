@@ -29,6 +29,11 @@
 
     $scope.selectedLog = selectedLog;
 
+    $scope.isRegression = true;
+    $scope.isIntercase = false;
+    $scope.isTimeseries = false;
+    $scope.note = '';
+
   	$scope.train = function() {
   		console.log("train: "+ $scope.selectedLog);
   		$mdDialog.show({
@@ -54,11 +59,7 @@
 	  			'</center>'+
 	  			'</div>'}
 		    )
-	    	RegressionLinear.get({log: $scope.selectedLog}, function(result){
-				console.log("training and making the prediction");
-				$scope.loading = false;
-				location.reload();
-			});
+			updateRegressor();
 	    });
   	}
 

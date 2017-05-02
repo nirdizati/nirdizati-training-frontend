@@ -24,6 +24,11 @@
     var selectedLog = $cookies.get('selectedLog');
     selectedLog = selectedLog.replace(/['"]+/g, '');
 
+    $scope.isRegression = false;
+    $scope.isIntercase = true;
+    $scope.isTimeseries = false;
+    $scope.note = '';
+
     $scope.selectedLog = selectedLog;
 
     $scope.levels = ['Level0', 'Level1', 'Level2', 'Level3'];
