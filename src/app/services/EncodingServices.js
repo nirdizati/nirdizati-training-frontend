@@ -33,4 +33,8 @@ app.service('ForecastingArmaResources', function ($resource, PredictionLink) {
 app.service('EventIndex', function ($resource, PredictionLink) {
   return $resource(PredictionLink.link+'encoding/events', {});
 });
+
 //---------------classification predictions------------------------//
+app.service('FastSlowEncoding', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'encoding/fastslowencode', {});
+});

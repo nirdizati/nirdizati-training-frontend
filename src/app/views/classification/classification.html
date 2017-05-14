@@ -1,15 +1,29 @@
 <div class="table-responsive-vertical md-whiteframe-z1" id="classification_div">
-<md-toolbar class="md-table-toolbar md-default">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+          <span><b>{{pageLabel}}</b></span>
+      </div>
       <div class="md-toolbar-tools">
           <span>Predictions : {{selectedLog}}</span>
       </div>
       <div class="md-toolbar-tools">
-          <small>**If results are available, there is no need to retrain and reevaluate the data.</small>
-      </div>
-      <div class="md-toolbar-tools" ng-show={{isRegression}}>
         <span>Select Classification Method:</span>
-        <md-select ng-model="selectClassifier" placeholder="Select Classification" ng-change="updateClassifier()">
-          <md-option ng-repeat="(key, value) in regressors" ng-value="key">
+        <md-select ng-model="selectedClassifier" placeholder="Select Classification" ng-change="updateClassifier()">
+          <md-option ng-repeat="(key, value) in classifiers" ng-value="key">
+            {{value}}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="md-toolbar-tools">
+          <md-input-container class="md-block">
+              <label>Prefix Length</label>
+              <input ng-model="prefixLength">
+          </md-input-container>
+      </div>
+      <div class="md-toolbar-tools">
+        <span>LTL:</span>
+        <md-select ng-model="selectedLTL" ng-change="updateLTL()">
+          <md-option ng-repeat="(key, value) in ltl" ng-value="key">
             {{value}}
           </md-option>
         </md-select>
@@ -17,14 +31,6 @@
     </md-toolbar>
 
     <form>
-      <div class="md-toolbar-tools" ng-show={{isIntercase}}>
-        <span>Select Encoding Level:</span>
-        <md-select ng-model="selectedLevel" placeholder="Select Level" ng-change="levelChange()">
-            <md-option ng-repeat="level in levels" ng-value="level">
-              {{level}}
-            </md-option>
-        </md-select>
-      </div>
       <div class="button-toolbar" layout="row" layout-align="end center">
           <button class="md-primary" ng-click="train()">Train And Predict</button>
       </div>
@@ -39,31 +45,20 @@
                 </div>
               </md-content>
             </md-tab>
-            <md-tab label="Evaluation MAE">
+            <md-tab label="Step Results">
               <md-content class="md-padding">
                 <div layout-gt-md="row">
-                   <div id="eval_div_mae" style="width: 90%;"></div>
+                  <div id="step_table_div" style="width: 90%;"></div>
                 </div>
               </md-content>
             </md-tab>
-            <md-tab label="Evaluation RMSE">
+            <md-tab label="Summary: Pie Chart">
               <md-content class="md-padding">
                 <div layout-gt-md="row">
-                   <div id="eval_div_rmse" style="width: 90%;"></div>
+                  <div id="prediction_pie_chart_div" style="width: 50%;"></div>
                 </div>
-              </md-content>
-            </md-tab>
-            <md-tab label="Per Trace Results">
-              <md-content class="md-padding">
-                <span>Select Trace:</span>
-                <md-select ng-model="selectedTrace" placeholder="Select Trace" ng-change="update()">
-                  <md-option ng-repeat="value in traces" ng-value="value">
-                    {{value}}
-                  </md-option>
-                </md-select>
-                <span>{{note}}</span>
                 <div layout-gt-md="row">
-                  <div id="chart_div" style="width: 90%;"></div>
+                  <div id="actual_pie_chart_div" style="width: 50%;"></div>
                 </div>
               </md-content>
             </md-tab>

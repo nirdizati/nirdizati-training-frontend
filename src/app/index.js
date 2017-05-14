@@ -50,8 +50,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Time Prediction'
         }
       })
-      .state('home.prediction-regression', {
-        url: '/prediction/time/regression',
+      .state('home.prediction-intracase', {
+        url: '/prediction/time/intracase',
         controller: 'TimeRegressionController',
         controllerAs: 'vm',
         templateUrl: 'app/views/time/remainingtime.html',
@@ -81,7 +81,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       })
       //classification predictions
       .state('home.prediction-classification', {
-        url: '/prediction/classification',
+        url: '/prediction/outcome/classification',
         controller: 'ClassificationController',
         controllerAs: 'vm',
         templateUrl: 'app/views/classification/classification.html',

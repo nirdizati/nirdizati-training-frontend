@@ -22,8 +22,11 @@
   	var params = $location.search();
   	var selectedLog = params['log'];
 
+  	$scope.pageLabel = "Next Activity Prediction";
     $scope.selectedLog = selectedLog;
     $scope.prefixLength = 0;
+    $scope.pieVisible = false;
+    
     if("prefixLength" in params){
 		$scope.prefixLength = params['prefixLength'];
 	}
@@ -54,7 +57,7 @@
 	  			'</div>'}
 		    )
 			if($scope.selectedClassifier == "DecisionTree"){
-				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength}, function(result) {
+				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -62,7 +65,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "RandomForest"){
-				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength}, function(result) {
+				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -70,7 +73,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "KNN"){
-				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength}, function(result) {
+				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -80,12 +83,6 @@
 	    });
   	}
 
- //  	function reloadpage(){
-	// 	$scope.loading = false;
-	// 	var linkKey = "prediction/activity/classification";
-	// 	$location.path(linkKey).search({log: $scope.selectedLog, classifier: $scope.selectedClassifier, prefixLength: $scope.prefixLength});
-	// 	location.reload();
-	// }
 
 	$scope.selectedClassifier = 'DecisionTree';
 	if("classifier" in params){
@@ -141,14 +138,6 @@
 				}
 				historyActivities = historyActivities.substring(0, historyActivities.length - 1);
 				step_table_values.push([historyActivities, actual, prediction]);
-				// prediction = events[result.results[i][result.results[i].length-1]];
-				// actual = events[result.results[i][result.results[i].length-2]];
-				// historyActivities = "";
-				// for(j = 0; j < $scope.prefixLength; j++){
-				// 	historyActivities += events[result.results[i][j]]+"_";
-				// }
-				// historyActivities = historyActivities.substring(0, historyActivities.length - 1);
-				// step_table_values.push([historyActivities, actual, prediction]);
 			}
 
 			step_data.addRows(step_table_values);
