@@ -70,6 +70,15 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         }
       })
       //activity predictions
+      .state('home.prediction-activity', {
+        url: '/prediction/activity/classification',
+        controller: 'ActivityController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/activity/classification.html',
+        data: {
+          title: 'Activity'
+        }
+      })
       //classification predictions
       .state('home.prediction-classification', {
         url: '/prediction/classification',

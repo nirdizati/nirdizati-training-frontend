@@ -1,0 +1,51 @@
+<div class="table-responsive-vertical md-whiteframe-z1" id="classification_div">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+          <span><b>Next Activity Prediction</b></span>
+      </div>
+      <div class="md-toolbar-tools">
+          <span>Predictions : {{selectedLog}}</span>
+      </div>
+      <div class="md-toolbar-tools">
+        <span>Select Classification Method:</span>
+        <md-select ng-model="selectedClassifier" placeholder="Select Classification" ng-change="updateClassifier()">
+          <md-option ng-repeat="(key, value) in classifiers" ng-value="key">
+            {{value}}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="md-toolbar-tools">
+          <md-input-container class="md-block">
+              <label>Prefix Length</label>
+              <input ng-model="prefixLength">
+          </md-input-container>
+      </div>
+    </md-toolbar>
+
+    <form>
+      <div class="button-toolbar" layout="row" layout-align="end center">
+          <button class="md-primary" ng-click="train()">Train And Predict</button>
+      </div>
+
+      <div ng-cloak>
+        <md-content>
+          <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="General Results">
+              <md-content class="md-padding">
+                <div layout-gt-md="row">
+                   <div id="table_div" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Step Results">
+              <md-content class="md-padding">
+                <div layout-gt-md="row">
+                  <div id="step_table_div" style="width: 90%;"></div>
+                </div>
+              </md-content>
+            </md-tab>
+          </md-tabs>
+        </md-content>
+      </div>
+    </form>
+</div>

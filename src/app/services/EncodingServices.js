@@ -9,7 +9,7 @@ var app = angular.module('angularMaterialAdmin');
 
 //time-series
 app.service('TimeseriesEncoding', function ($resource, PredictionLink) {
-  return $resource(PredictionLink.link+'forecasting/encode', {});
+  return $resource(PredictionLink.link+'encoding/encode', {});
 });
 
 //index-based
@@ -30,5 +30,7 @@ app.service('ForecastingArmaResources', function ($resource, PredictionLink) {
 
 
 //---------------acitivity predictions------------------------//
-
+app.service('EventIndex', function ($resource, PredictionLink) {
+  return $resource(PredictionLink.link+'encoding/events', {});
+});
 //---------------classification predictions------------------------//

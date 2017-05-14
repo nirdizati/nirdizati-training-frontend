@@ -81,5 +81,16 @@ app.service('ForecastingArmaResources', function ($resource, PredictionLink) {
 
 
 //---------------acitivity predictions------------------------//
+app.service('ClassificationDecisionTree', function ($resource, ClassificationLink) {
+  return $resource(ClassificationLink.link+'classify/dt', {});
+});
+
+app.service('ClassificationRandomForest', function ($resource, ClassificationLink) {
+  return $resource(ClassificationLink.link+'classify/rf', {});
+});
+
+app.service('ClassificationKNN', function ($resource, ClassificationLink) {
+  return $resource(ClassificationLink.link+'classify/knn', {});
+});
 
 //---------------classification predictions------------------------//
