@@ -3,6 +3,7 @@
 
   var app = angular.module('app', [ 'ngMaterial' ]);
 
+
   app.factory('BackEnd', function() {
 	  return {
 	      // link : 'http://localhost:8080/api/',
@@ -16,6 +17,18 @@
 	  return {
 	      // link : 'http://localhost:8000/',
 	      link : 'http://193.40.11.46/'
+	  };
+  });
+
+  app.factory('LogReader', function() {
+	  return {
+	      link : 'http://193.40.11.46/'
+	  };
+  });
+
+  app.factory('ClassificationLink', function() {
+	  return {
+	      link : 'http://localhost:8080/api/',
 	  };
   });
 
