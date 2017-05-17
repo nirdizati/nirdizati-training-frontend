@@ -121,7 +121,7 @@
 
 	function reloadpage(){
 		$scope.loading = false;
-		var linkKey = "prediction/time/regression";
+		var linkKey = "prediction/time/intracase";
 		$location.path(linkKey).search({log: $scope.selectedLog, regressor: $scope.selectedRegressor});
 		location.reload();
 	}
