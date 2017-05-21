@@ -19,6 +19,7 @@
 
   function ClassificationController($scope, $location, ClassificationDecisionTree, ClassificationRandomForest, ClassificationKNN, TimeseriesEncoding, LogsService, EventIndex, $mdDialog, $cookieStore, googlechart) {
 
+  	confirm("This section is disabled not enabled in live server. Setting changes is currently done by developer.");
   	var params = $location.search();
   	var selectedLog = params['log'];
 
