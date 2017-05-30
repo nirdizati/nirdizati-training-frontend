@@ -21,9 +21,23 @@
           </md-input-container>
       </div>
       <div class="md-toolbar-tools">
-        <span>LTL:</span>
+        <span>Business Rule:</span>
         <md-select ng-model="selectedLTL" ng-change="updateLTL()">
           <md-option ng-repeat="(key, value) in ltl" ng-value="key">
+            {{value}}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="md-toolbar-tools" ng-hide="hideLTL">
+        <span>Activity A:</span>
+        <md-select ng-model="selectedActivityA" ng-change="updateActivityA()">
+          <md-option ng-repeat="(key, value) in activities" ng-value="key">
+            {{value}}
+          </md-option>
+        </md-select>
+        <span>Activity B:</span>
+        <md-select ng-model="selectedActivityB" ng-change="updateActivityB()">
+          <md-option ng-repeat="(key, value) in activities" ng-value="key">
             {{value}}
           </md-option>
         </md-select>

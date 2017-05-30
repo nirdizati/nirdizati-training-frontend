@@ -19,7 +19,7 @@
 
   function ClassificationController($scope, $location, ClassificationDecisionTree, ClassificationRandomForest, ClassificationKNN, TimeseriesEncoding, LogsService, EventIndex, $mdDialog, $cookieStore, googlechart) {
 
-  	confirm("This section is disabled not enabled in live server. Setting changes is currently done by developer.");
+  	// confirm("This section is disabled not enabled in live server. Setting changes is currently done by developer.");
   	var params = $location.search();
   	var selectedLog = params['log'];
 
@@ -58,7 +58,7 @@
 	  			'</div>'}
 		    )
 			if($scope.selectedClassifier == "DecisionTree"){
-				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"fastslow"}, function(result) {
+				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:$scope.selectedLTL, activityA:$scope.selectedActivityA+1, activityB:$scope.selectedActivityB+1}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -66,7 +66,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "RandomForest"){
-				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"fastslow"}, function(result) {
+				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:$scope.selectedLTL, activityA:$scope.selectedActivityA+1, activityB:$scope.selectedActivityB+1}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -74,7 +74,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "KNN"){
-				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"fastslow"}, function(result) {
+				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:$scope.selectedLTL, activityA:$scope.selectedActivityA+1, activityB:$scope.selectedActivityB+1}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -94,16 +94,33 @@
 		$scope.selectedClassifier = $scope.selectedClassifier;
 	}
 
+	EventIndex.query({log:$scope.selectedLog}, function(events) {
+		$scope.activities = events;
+	});
+
 	$scope.classifiers = {"DecisionTree":"DecisionTree","RandomForest":"Random Forest","KNN":"K-Nearest Neighbors"};
 
 	$scope.selectedLTL = "fastslow";
-	$scope.ltl = {"fastslow":"Fast/Slow Traces"};
+	$scope.ltl = {"fastslow":"Fast/Slow Traces", "ltl":"LTL: A happens before B"};
 
+	$scope.selectedActivityA = 0;
+	$scope.selectedActivityB = 0;
+
+	$scope.hideLTL = true;
 
     google.charts.load('current', {packages: ['corechart', 'line', 'table']});
     google.charts.setOnLoadCallback(drawGeneral);
 
 	function drawGeneral() {
+	}
+
+	$scope.updateLTL = function(){
+		if($scope.selectedLTL == "fastslow"){
+			$scope.hideLTL = true;
+		}
+		else{
+			$scope.hideLTL = false;
+		}
 	}
 
 	function displayTable(result, method) {
@@ -122,6 +139,8 @@
 		$mdDialog.hide();
 	}
 
+
+
 	function displayStepTable(result, method) {
 		var step_table = new google.visualization.Table(document.getElementById('step_table_div'));
 
@@ -132,59 +151,117 @@
 
 		step_table_values = [];
 
-		EventIndex.query({log:$scope.selectedLog}, function(events) {
-			var countFastActual = 0;
-			var countSlowActual = 0;
-			var countFastPrediction = 0;
-			var countSlowPrediction = 0;
-			for(i = 0; i < result.results.length; i++){
-				resultsLength = result.results[i].length;
-				prediction = result.results[i][resultsLength-1]?"fast":"slow";
-				if(prediction == "fast") countFastPrediction++;
-				else countSlowPrediction++;
+		if($scope.selectedLTL == "fastslow"){
+			EventIndex.query({log:$scope.selectedLog}, function(events) {
+				var countFastActual = 0;
+				var countSlowActual = 0;
+				var countFastPrediction = 0;
+				var countSlowPrediction = 0;
+				for(i = 0; i < result.results.length; i++){
+					resultsLength = result.results[i].length;
+					prediction = result.results[i][resultsLength-1]?"fast":"slow";
+					if(prediction == "fast") countFastPrediction++;
+					else countSlowPrediction++;
 
-				actual = result.results[i][resultsLength-2]?"fast":"slow";
-				if(actual == "fast") countFastActual++;
-				else countSlowActual++;
+					actual = result.results[i][resultsLength-2]?"fast":"slow";
+					if(actual == "fast") countFastActual++;
+					else countSlowActual++;
 
-				historyActivities = "";
-				for(j = 0; j < $scope.prefixLength; j++){
-					historyActivities += events[result.results[i][j]]+"_";
+					historyActivities = "";
+					for(j = 0; j < $scope.prefixLength; j++){
+						historyActivities += events[result.results[i][j]-1]+";";
+					}
+					historyActivities = historyActivities.substring(0, historyActivities.length - 1);
+					step_table_values.push([historyActivities, actual.toString(), prediction.toString()]);
 				}
-				historyActivities = historyActivities.substring(0, historyActivities.length - 1);
-				step_table_values.push([historyActivities, actual.toString(), prediction.toString()]);
-			}
 
-			step_data.addRows(step_table_values);
-			step_table.draw(step_data, {width: '100%', height: '100%'});
+				step_data.addRows(step_table_values);
+				step_table.draw(step_data, {width: '100%', height: '100%'});
 
-			var prediction_pie_data = google.visualization.arrayToDataTable([
-	          ['Label', 'Fast/Slow Cases'],
-	          ['Fast', countFastPrediction],
-	          ['Slow', countSlowPrediction]
-	        ]);
+				var prediction_pie_data = google.visualization.arrayToDataTable([
+		          ['Label', 'Fast/Slow Cases'],
+		          ['Fast', countFastPrediction],
+		          ['Slow', countSlowPrediction]
+		        ]);
 
-	        var actual_pie_data = google.visualization.arrayToDataTable([
-	          ['Label', 'Fast/Slow Cases'],
-	          ['Fast', countFastActual],
-	          ['Slow', countSlowActual]
-	        ]);
+		        var actual_pie_data = google.visualization.arrayToDataTable([
+		          ['Label', 'Fast/Slow Cases'],
+		          ['Fast', countFastActual],
+		          ['Slow', countSlowActual]
+		        ]);
 
-	        var optionsPrediction = {
-	          title: 'Prediction for Fast/Slow Cases'
-	        };
+		        var optionsPrediction = {
+		          title: 'Prediction for Fast/Slow Cases'
+		        };
 
-	        var piechartprediction = new google.visualization.PieChart(document.getElementById('prediction_pie_chart_div'));
-	        piechartprediction.draw(prediction_pie_data, optionsPrediction);
+		        var piechartprediction = new google.visualization.PieChart(document.getElementById('prediction_pie_chart_div'));
+		        piechartprediction.draw(prediction_pie_data, optionsPrediction);
 
-	        var optionsActual = {
-	          title: 'Actual Outcome for Fast/Slow Cases'
-	        };
-	        var piechartactual = new google.visualization.PieChart(document.getElementById('actual_pie_chart_div'));
-	        piechartactual.draw(actual_pie_data, optionsActual);
+		        var optionsActual = {
+		          title: 'Actual Outcome for Fast/Slow Cases'
+		        };
+		        var piechartactual = new google.visualization.PieChart(document.getElementById('actual_pie_chart_div'));
+		        piechartactual.draw(actual_pie_data, optionsActual);
 
-			$mdDialog.hide();
-		});
+				$mdDialog.hide();
+			});
+		}
+		else{
+			EventIndex.query({log:$scope.selectedLog}, function(events) {
+				var countFastActual = 0;
+				var countSlowActual = 0;
+				var countFastPrediction = 0;
+				var countSlowPrediction = 0;
+				for(i = 0; i < result.results.length; i++){
+					resultsLength = result.results[i].length;
+					prediction = result.results[i][resultsLength-1]?"true":"false";
+					if(prediction == "true") countFastPrediction++;
+					else countSlowPrediction++;
+
+					actual = result.results[i][resultsLength-2]?"true":"false";
+					if(actual == "true") countFastActual++;
+					else countSlowActual++;
+
+					historyActivities = "";
+					for(j = 0; j < $scope.prefixLength; j++){
+						historyActivities += events[result.results[i][j]-1]+"_";
+					}
+					historyActivities = historyActivities.substring(0, historyActivities.length - 1);
+					step_table_values.push([historyActivities, actual.toString(), prediction.toString()]);
+				}
+
+				step_data.addRows(step_table_values);
+				step_table.draw(step_data, {width: '100%', height: '100%'});
+
+				var prediction_pie_data = google.visualization.arrayToDataTable([
+		          ['Label', 'True/False Cases'],
+		          ['True', countFastPrediction],
+		          ['False', countSlowPrediction]
+		        ]);
+
+		        var actual_pie_data = google.visualization.arrayToDataTable([
+		          ['Label', 'True/False Cases'],
+		          ['True', countFastActual],
+		          ['False', countSlowActual]
+		        ]);
+
+		        var optionsPrediction = {
+		          title: 'Prediction for True/False Cases'
+		        };
+
+		        var piechartprediction = new google.visualization.PieChart(document.getElementById('prediction_pie_chart_div'));
+		        piechartprediction.draw(prediction_pie_data, optionsPrediction);
+
+		        var optionsActual = {
+		          title: 'Actual Outcome for True/False Cases'
+		        };
+		        var piechartactual = new google.visualization.PieChart(document.getElementById('actual_pie_chart_div'));
+		        piechartactual.draw(actual_pie_data, optionsActual);
+
+				$mdDialog.hide();
+			});
+		}
+
 
 	}
 
