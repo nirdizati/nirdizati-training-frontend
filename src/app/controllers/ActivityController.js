@@ -18,8 +18,6 @@
     ]);
 
   function ActivityController($scope, $location, ClassificationDecisionTree, ClassificationRandomForest, ClassificationKNN, TimeseriesEncoding, LogsService, EventIndex, $mdDialog, $cookieStore, googlechart) {
-
-  	confirm("This section is disabled not enabled in live server. Setting changes is currently done by developer.");
   	var params = $location.search();
   	var selectedLog = params['log'];
 
@@ -58,7 +56,7 @@
 	  			'</div>'}
 		    )
 			if($scope.selectedClassifier == "DecisionTree"){
-				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
+				var predictionRes = ClassificationDecisionTree.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity", activityA:0, activityB:0}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -66,7 +64,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "RandomForest"){
-				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
+				var predictionRes = ClassificationRandomForest.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity", activityA:0, activityB:0}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -74,7 +72,7 @@
 				});
 			}
 			else if($scope.selectedClassifier == "KNN"){
-				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity"}, function(result) {
+				var predictionRes = ClassificationKNN.get({encodedFile:$scope.selectedLog, prefixLength:$scope.prefixLength, encodingType:"nextactivity", activityA:0, activityB:0}, function(result) {
 					displayTable(result);
 					displayStepTable(result);
 		        }, function(error) {
@@ -135,7 +133,7 @@
 				actual = events[result.results[i][resultsLength-2]];
 				historyActivities = "";
 				for(j = 0; j < $scope.prefixLength; j++){
-					historyActivities += events[result.results[i][j]]+"_";
+					historyActivities += events[result.results[i][j]]+";";
 				}
 				historyActivities = historyActivities.substring(0, historyActivities.length - 1);
 				step_table_values.push([historyActivities, actual, prediction]);
