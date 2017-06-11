@@ -153,7 +153,7 @@
 			.parent(angular.element(document.querySelector('#prediction_div')))
 			.clickOutsideToClose(true)
 			.title('No Results Available for this Log')
-			.textContent('Please click on Train and Predict button')
+			.textContent('Please click on Train and Validate button')
 			.ok('Got it!')
 		);
 	}

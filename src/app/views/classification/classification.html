@@ -46,27 +46,27 @@
 
     <form>
       <div class="button-toolbar" layout="row" layout-align="end center">
-          <button class="md-primary" ng-click="train()">Train And Predict</button>
+          <button class="md-primary" ng-click="train()">Train And Validate</button>
       </div>
 
       <div ng-cloak>
         <md-content>
           <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="General Results">
+            <md-tab label="General">
               <md-content class="md-padding">
                 <div layout-gt-md="row">
                    <div id="table_div" style="width: 90%;"></div>
                 </div>
               </md-content>
             </md-tab>
-            <md-tab label="Step Results">
+            <md-tab label="Case-by-case">
               <md-content class="md-padding">
                 <div layout-gt-md="row">
                   <div id="step_table_div" style="width: 90%;"></div>
                 </div>
               </md-content>
             </md-tab>
-            <md-tab label="Summary: Pie Chart">
+            <md-tab label="Pie Charts">
               <md-content class="md-padding">
                 <div layout-gt-md="row">
                   <div id="prediction_pie_chart_div" style="width: 50%;"></div>

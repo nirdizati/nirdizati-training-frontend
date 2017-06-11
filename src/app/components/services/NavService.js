@@ -10,6 +10,11 @@
   function navService($q){
     var menuItems = [
       {
+        name: 'Logs',
+        icon: 'description',
+        sref: '.logs'
+      },
+      {
         name: 'Dashboard',
         icon: 'dashboard',
         sref: '.dashboard'
@@ -18,11 +23,6 @@
         name: 'Prediction',
         icon: 'timeline',
         sref: '.prediction'
-      },
-      {
-        name: 'Logs',
-        icon: 'description',
-        sref: '.logs'
       }
     ];
 
