@@ -128,7 +128,7 @@
 
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Prediction Method');
-		data.addColumn('number', 'Accuracy');
+		data.addColumn('number', 'F1Score');
 
 		table_values = [];
 

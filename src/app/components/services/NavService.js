@@ -10,7 +10,7 @@
   function navService($q){
     var menuItems = [
       {
-        name: 'Logs',
+        name: 'Log',
         icon: 'description',
         sref: '.logs'
       },
