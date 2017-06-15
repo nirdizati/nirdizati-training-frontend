@@ -170,7 +170,7 @@
 					historyActivities = "";
 					for(j = 0; j < $scope.prefixLength; j++){
 						console.log("results = "+result.results[i][j]);
-						historyActivities += events[result.results[i][j]-1]+";";
+						historyActivities += events[result.results[i][j]]+";";
 					}
 					historyActivities = historyActivities.substring(0, historyActivities.length - 1);
 					step_table_values.push([historyActivities, actual.toString(), prediction.toString()]);

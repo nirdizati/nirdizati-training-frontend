@@ -15,7 +15,7 @@
         sref: '.logs'
       },
       {
-        name: 'Dashboard',
+        name: 'Log Overview',
         icon: 'dashboard',
         sref: '.dashboard'
       },
