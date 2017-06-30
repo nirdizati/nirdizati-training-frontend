@@ -26,8 +26,9 @@
                 $scope.selectedLog = selectedLog;
             }
         });
-        $scope.EncodingMethods = ["simple_index", "boolean", "frequency", "complex_index", "index_latest_payload"];
-        $scope.ClusteringMethods = ['Kmeans', 'DBscan', 'None'];
+        console.log($scope.selectedLog)
+        $scope.EncodingMethods = ["simpleIndex", "boolean", "frequency", "complexIndex", "indexLatestPayload"];
+        $scope.ClusteringMethods = ['Kmeans', 'None'];
         $scope.RegressionMethods = ["xgboost", "linear", "randomforest"]
         $scope.SelectedEncodingMethods = []
         $scope.SelectedClusteringMethods = []
@@ -53,7 +54,7 @@
         }
 
         $scope.postToConfiger = function () {
-            var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, regression: $scope.SelectedRegressionMethods });
+            var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, regression: $scope.SelectedRegressionMethods, clustering: $scope.SelectedClusteringMethods });
             $http.post('http://127.0.0.1:8000/core_services/configer', parameter).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously

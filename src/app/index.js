@@ -41,6 +41,15 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Configuration Runner'
         }
       })
+      .state('home.regResults', {
+        url: '/regResults',
+        controller: 'RegResultController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/RegResults.html',
+        data: {
+          title: 'Regression '
+        }
+      })
       //time based predictions
       .state('home.prediction-intercase', {
         url: '/prediction/time/intercase',

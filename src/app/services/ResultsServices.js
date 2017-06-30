@@ -12,5 +12,9 @@ app.service('listAvailableResultsPrefix', function ($resource, BackEnd) {
 });
 
 app.service('listAvailableResultsLog', function ($resource, BackEnd) {
-  return $resource(ResultsUrl + 'logs/listAvailableResultsLog', {});
+  return $resource(ResultsUrl + '/listAvailableResultsLog', {});
+});
+
+app.service('fileToJsonResults', function ($resource, BackEnd) {
+  return $resource(ResultsUrl + '/fileToJsonResults', {});
 });
