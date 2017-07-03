@@ -18,3 +18,7 @@ app.service('listAvailableResultsLog', function ($resource, BackEnd) {
 app.service('fileToJsonResults', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/fileToJsonResults', {});
 });
+
+app.service('fileToJsonGeneralResults', function ($resource, BackEnd) {
+  return $resource(ResultsUrl + '/fileToJsonGeneralResults', {});
+});

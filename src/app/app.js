@@ -30,7 +30,7 @@
   app.factory('ClassificationLink', function() {
 	  return {
 	      // link : 'http://localhost:8080/api/',
-	      link : 'http://predictiveanalytics.sloppy.zone/',
+	      link : 'http://193.40.11.46/',
 	  };
   });
 

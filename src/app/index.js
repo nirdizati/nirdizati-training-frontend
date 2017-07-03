@@ -50,6 +50,24 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Regression '
         }
       })
+      .state('home.ClassConfig', {
+        url: '/classConfig',
+        controller: 'ClassConfigController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/classConfig.html',
+        data: {
+          title: 'Classification Configuration Runner'
+        }
+      })
+      .state('home.ClassResults', {
+        url: '/classResults',
+        controller: 'ClassResultController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/ClassResults.html',
+        data: {
+          title: 'classification'
+        }
+      })
       //time based predictions
       .state('home.prediction-intercase', {
         url: '/prediction/time/intercase',

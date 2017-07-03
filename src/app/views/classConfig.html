@@ -1,0 +1,73 @@
+<div id="main" id="dashboard_div">
+    <md-toolbar class="md-table-toolbar md-default">
+        <form>
+
+        <div class="md-toolbar-tools">
+            <span>Log:</span>
+            <md-input-container>
+                <md-select required ng-model="selectedLog" placeholder="Select Log" ng-change="update()">
+                    <md-option ng-repeat="log in logs" ng-value="log">
+                        {{log}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <br>
+        <div class="md-toolbar-tools">
+            <md-input-container class="md-block">
+                <label>Prefix Length</label>
+                <input required min="0" type="number" ng-model="prefixLength">
+            </md-input-container>
+        </div>
+        <br>
+
+        <div class="md-toolbar-tools">
+            <span>Select Encoding methods</span>
+
+            <div layout="row" layout-wrap flex>
+                <div ng-repeat="EncodingMethod in EncodingMethods" class="standard" flex="50">
+                    <label>
+                            <input ng-required="SelectedEncodingMethods.length==0" type="checkbox" ng-checked="exists(EncodingMethod, SelectedEncodingMethods)" ng-click="toggle(EncodingMethod, SelectedEncodingMethods)"/>
+                             {{ EncodingMethod }}
+                         </label>
+                </div>
+
+            </div>
+        </div>
+        <div class="md-toolbar-tools">
+            <span>Select Clustering methods</span>
+
+            <div layout="row" layout-wrap flex>
+                <div ng-repeat="ClusteringMethod in ClusteringMethods" class="standard" flex="50">
+                    <label>
+                            <input ng-required="SelectedClusteringMethods.length==0"  type="checkbox" ng-checked="exists(ClusteringMethod, SelectedClusteringMethods)" ng-click="toggle(ClusteringMethod, SelectedClusteringMethods)"/>
+                             {{ ClusteringMethod }}
+                         </label>
+                </div>
+            </div>
+        </div>
+        <div class="md-toolbar-tools">
+            <span>Select Classification methods</span>
+
+            <div layout="row" layout-wrap flex>
+                <div ng-repeat="ClassMethod in ClassMethods" class="standard" flex="50">
+                    <label>
+                            <input ng-required="SelectedClassMethods.length==0" type="checkbox" id="ClassMethod" ng-checked="exists(ClassMethod, SelectedClassMethods)" ng-click="toggle(ClassMethod, SelectedClassMethods)"/>
+                             {{ ClassMethod }}
+                         </label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <center>
+                <md-button style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26)" type="submit" ng-click="postToConfiger()">
+                    Submit
+                </md-button>
+            </center>
+
+
+        </div>
+        </form>
+
+    </md-toolbar>
+</div>

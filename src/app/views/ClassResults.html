@@ -28,7 +28,7 @@
     <div layout="row" layout-wrap flex>
         <div ng-repeat="availableResut in availableResutls" class="standard" flex="50">
             <label>
-                <input type="checkbox" id="availableResut" ng-checked="exists(availableResut, SelectedavailableResutls)" ng-click="toggle(availableResut, SelectedavailableResutls)"/>
+                <input type="checkbox" id="availableResut" ng-checked="exists(availableResut, SelectedClassAvailableResutls)" ng-click="toggle(availableResut, SelectedClassAvailableResutls)"/>
                     {{ availableResut }}
                 </label>
         </div>
@@ -41,13 +41,13 @@
                 <table>
                     <tr>
                         <th>Run</th>
-                        <th>RMSE</th>
-                        <th>MAE</th>
+                        <th>F-measure</th>
+                        <th>AUC</th>
                     </tr>
-                    <tr ng-repeat="general in Generals">
+                    <tr ng-repeat="general in ClassGenerals">
                         <td>{{general.Run}}</td>
-                        <td>{{general.Rmse}}</td>
-                        <td>{{general.Mae}}</td>
+                        <td>{{general.Fmeasure}}</td>
+                        <td>{{general.AUC}}</td>
                     </tr>
                 </table>
             </md-tab>
@@ -56,13 +56,13 @@
                 <table>
                     <tr>
                         <th>Trace Id</th>
-                        <th>Acutal RemainingTime</th>
+                        <th>Actual</th>
                         <th>Prediction</th>
                     </tr>
                     <tr ng-repeat="Trace in tab.Traces">
                         <td>{{Trace.Id}}</td>
-                        <td>{{Trace.remainingTime}}</td>
-                        <td>{{Trace.prediction}}</td>
+                        <td>{{Trace.actual}}</td>
+                        <td>{{Trace.predicted}}</td>
                     </tr>
                 </table>
             </md-tab>

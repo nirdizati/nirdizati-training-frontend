@@ -2,23 +2,23 @@
 
     angular
         .module('app')
-        .controller('RegResultController', [
+        .controller('ClassResultController', [
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             '$state', '$mdToast', '$scope', '$http',
             'WorkloadService',
             'listAvailableResultsFiles', 'listAvailableResultsPrefix', 'listAvailableResultsLog', 'fileToJsonResults', 'fileToJsonGeneralResults',
             '$cookies', '$cookieStore',
             '$interval',
-            RegResultsController
+            ClassResultsController
         ]);
 
-    function RegResultsController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, $http, WorkloadService,
+    function ClassResultsController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, $http, WorkloadService,
         listAvailableResultsFiles, listAvailableResultsPrefix, listAvailableResultsLog, fileToJsonResults, fileToJsonGeneralResults,
         $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         var selectedLog = "tot";
 
-        listAvailableResultsLog.query({restype: '_regg'}, function (data) {
+        listAvailableResultsLog.query({restype: '_class'}, function (data) {
             $scope.logs = data;
             if (!$cookies.get('selectedLog')) {
                 $scope.selectedLog = data[0];
@@ -33,7 +33,7 @@
         });
 
         getListPrefix = function () {
-            listAvailableResultsPrefix.query({ log: $scope.selectedLog, restype: '_regg' }, function (data) {
+            listAvailableResultsPrefix.query({ log: $scope.selectedLog, restype: '_class' }, function (data) {
                 $scope.prefixs = data;
                 if (!$cookies.get('selectedPrefix')) {
                     $scope.selectedPrefix = data[0];
@@ -48,14 +48,14 @@
             });
         }
         getListfiles = function () {
-            listAvailableResultsFiles.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_regg' }, function (data) {
+            listAvailableResultsFiles.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_class' }, function (data) {
                 //console.log(data)
                 encodingMethods = []
                 $scope.availableResutls = []
                 data.forEach(function (element) {
                     if (element == "General.csv") {
-                        fileToJsonGeneralResults.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_regg' }, function (data) {
-                            $scope.Generals = data;
+                        fileToJsonGeneralResults.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_class' }, function (data) {
+                            $scope.ClassGenerals = data;
                         });
                     } else {
                         var encodingMethod = element.replace(".csv", "")
@@ -77,7 +77,7 @@
             $cookieStore.put('selectedPrefix', $scope.selectedPrefix);
             location.reload();
         }
-        $scope.SelectedavailableResutls = []
+        $scope.SelectedClassAvailableResutls = []
 
         $scope.toggle = function (item, list) {
             var idx = list.indexOf(item);
@@ -88,8 +88,8 @@
                 list.push(item);
             }
             $scope.tabs = []
-            $scope.SelectedavailableResutls.forEach(function (element) {
-                fileToJsonResults.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, encoding: element.split("_")[1], method: element.split("_")[0], cluster: element.split("_")[2], restype: '_regg' }, function (data) {
+            $scope.SelectedClassAvailableResutls.forEach(function (element) {
+                fileToJsonResults.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, encoding: element.split("_")[1], method: element.split("_")[0], cluster: element.split("_")[2], restype: '_class' }, function (data) {
                     $scope.tabs.push({ title: element, Traces: data })
                     console.log(data[0]['Id'])
 
