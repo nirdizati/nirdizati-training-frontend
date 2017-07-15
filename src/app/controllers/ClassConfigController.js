@@ -13,6 +13,8 @@
     function ClassConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList_dev, $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         $scope.prefixLength = 0;
+        $scope.thresholdValue = {value: 0};
+
         LogsList_dev.query({}, function (data) {
             console.log(data)
             $scope.logs = data;
@@ -30,9 +32,14 @@
         $scope.EncodingMethods = ["simpleIndex", "boolean", "frequency", "complexIndex", "indexLatestPayload"];
         $scope.ClusteringMethods = ['Kmeans', 'None'];
         $scope.ClassMethods = ["KNN", "RandomForest", "DecisionTree"]
+        $scope.Rules = ['remainingTime', 'duration']
         $scope.SelectedEncodingMethods = []
         $scope.SelectedClusteringMethods = []
         $scope.SelectedClassMethods = []
+        $scope.selectedRule = ""
+        $scope.selectedThreshold = ""
+
+        
 
         $scope.toggle = function (item, list) {
             var idx = list.indexOf(item);
@@ -54,7 +61,11 @@
         }
 
         $scope.postToConfiger = function () {
-            var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, classification: $scope.SelectedClassMethods, clustering: $scope.SelectedClusteringMethods });
+            if ($scope.selectedThreshold == 'custom') {
+                $scope.selectedThreshold = $scope.thresholdValue.value 
+                
+            }
+            var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, classification: $scope.SelectedClassMethods, clustering: $scope.SelectedClusteringMethods, rule: $scope.selectedRule, threshold: $scope.selectedThreshold });
             $http.post('http://127.0.0.1:8000/core_services/classConfiger', parameter).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously
