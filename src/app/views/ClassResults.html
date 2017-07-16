@@ -20,6 +20,26 @@
                 </md-select>
             </md-input-container>
         </div>
+        <div class="md-toolbar-tools">
+            <span>Available Rules:</span>
+            <md-input-container>
+                <md-select ng-model="selectedRule" placeholder="Select Rule" ng-change="update()">
+                    <md-option ng-repeat="rule in rules" ng-value="rule">
+                        Fast/Slow ({{rule}})
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+                <div class="md-toolbar-tools">
+            <span>Available Threshold:</span>
+            <md-input-container>
+                <md-select ng-model="selectedThreshold" placeholder="Select Threshold" ng-change="update()">
+                    <md-option ng-repeat="threshold in thresholds" ng-value="threshold">
+                        {{threshold}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
     </md-toolbar>
     <div class="md-toolbar-tools">
         <span>Available Resutls</span>

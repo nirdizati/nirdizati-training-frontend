@@ -6,7 +6,12 @@ var ResultsUrl = "http://127.0.0.1:8000/core_services"
 app.service('listAvailableResultsFiles', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/listAvailableResultsFiles', {});
 });
-
+app.service('listAvailableRules', function ($resource, BackEnd) {
+  return $resource(ResultsUrl + '/listAvailableRules', {});
+});
+app.service('listAvailableThreshold', function ($resource, BackEnd) {
+  return $resource(ResultsUrl + '/listAvailableThreshold', {});
+});
 app.service('listAvailableResultsPrefix', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/listAvailableResultsPrefix', {});
 });
