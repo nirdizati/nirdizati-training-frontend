@@ -26,9 +26,9 @@
     </div>
 
     <div layout="row" layout-wrap flex>
-        <div ng-repeat="availableResut in availableResutls" class="standard" flex="50">
+        <div ng-repeat="availableResut in regavailableResutls" class="standard" flex="50">
             <label>
-                <input type="checkbox" id="availableResut" ng-checked="exists(availableResut, SelectedavailableResutls)" ng-click="toggle(availableResut, SelectedavailableResutls)"/>
+                <input type="checkbox" id="availableResut" ng-checked="exists(availableResut, SelectedregavailableResutls)" ng-click="toggle(availableResut, SelectedregavailableResutls)"/>
                     {{ availableResut }}
                 </label>
         </div>
@@ -38,18 +38,16 @@
     <md-content>
         <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
             <md-tab label="General">
-                <table>
-                    <tr>
-                        <th>Run</th>
-                        <th>RMSE</th>
-                        <th>MAE</th>
-                    </tr>
-                    <tr ng-repeat="general in Generals">
-                        <td>{{general.Run}}</td>
-                        <td>{{general.Rmse}}</td>
-                        <td>{{general.Mae}}</td>
-                    </tr>
-                </table>
+                <div id="table_div"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by method">
+                <div id="methodGeneralValues" style="width: 900px; height: 500px;"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by cluster">
+                <div id="clusterGeneralValues" style="width: 900px; height: 500px;"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by encoding">
+                <div id="encodingGeneralValues" style="width: 900px; height: 500px;"></div>
             </md-tab>
             <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled" label="{{tab.title}}">
                 <div id="table_div" style="width: 90%;"></div>
