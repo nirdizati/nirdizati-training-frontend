@@ -23,3 +23,6 @@ app.service('LogsList', function ($resource, BackEnd) {
   return $resource(BackEnd.link+'logs/list', {});
 });
 
+app.service('LogsList_dev', function ($resource, BackEnd) {
+  return $resource('http://127.0.0.1:8000/logs/list', {});
+});

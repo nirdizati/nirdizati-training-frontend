@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'app' , 'md.data.table', 'ngResource', 'ngFileUpload', 'googlechart'])
+  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'app', 'md.data.table', 'ngResource', 'ngFileUpload', 'googlechart'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
-                    $mdIconProvider, $locationProvider, $httpProvider) {
+    $mdIconProvider, $locationProvider, $httpProvider) {
     $stateProvider
       .state('home', {
         url: '',
@@ -29,6 +29,43 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         templateUrl: 'app/views/prediction.html',
         data: {
           title: 'Prediction Method'
+        }
+      })
+      //Core Configuration 
+      .state('home.config', {
+        url: '/config',
+        controller: 'ConfigController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/config.html',
+        data: {
+          title: 'Configuration Runner'
+        }
+      })
+      .state('home.regResults', {
+        url: '/regResults',
+        controller: 'RegResultController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/RegResults.html',
+        data: {
+          title: 'Regression '
+        }
+      })
+      .state('home.ClassConfig', {
+        url: '/classConfig',
+        controller: 'ClassConfigController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/classConfig.html',
+        data: {
+          title: 'Classification Configuration Runner'
+        }
+      })
+      .state('home.ClassResults', {
+        url: '/classResults',
+        controller: 'ClassResultController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/ClassResults.html',
+        data: {
+          title: 'classification'
         }
       })
       //time based predictions
@@ -104,13 +141,13 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
     $mdThemingProvider
       .theme('default')
-        .primaryPalette('grey', {
-          'default': '600'
-        })
-        .accentPalette('teal', {
-          'default': '500'
-        })
-        .warnPalette('defaultPrimary');
+      .primaryPalette('grey', {
+        'default': '600'
+      })
+      .accentPalette('teal', {
+        'default': '500'
+      })
+      .warnPalette('defaultPrimary');
 
     $mdThemingProvider.theme('dark', 'default')
       .primaryPalette('defaultPrimary')
@@ -122,10 +159,10 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     $mdThemingProvider.theme('custom', 'default')
       .primaryPalette('defaultPrimary', {
         'hue-1': '50'
-    });
+      });
 
     $mdThemingProvider.definePalette('defaultPrimary', {
-      '50':  '#E8EAF6',
+      '50': '#E8EAF6',
       '100': '#C5CAE9',
       '200': '#9FA8DA',
       '300': '#7986CB',

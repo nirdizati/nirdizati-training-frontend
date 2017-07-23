@@ -1,0 +1,90 @@
+<div>
+    <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools">
+            <span>Available Log:</span>
+            <md-input-container>
+                <md-select ng-model="selectedLog" placeholder="Select Log" ng-change="update()">
+                    <md-option ng-repeat="log in logs" ng-value="log">
+                        {{log}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="md-toolbar-tools">
+            <span>Available Prefix:</span>
+            <md-input-container>
+                <md-select ng-model="selectedPrefix" placeholder="Select Prefix" ng-change="update()">
+                    <md-option ng-repeat="prefix in prefixs" ng-value="prefix">
+                        {{prefix}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="md-toolbar-tools">
+            <span>Available Rules:</span>
+            <md-input-container>
+                <md-select ng-model="selectedRule" placeholder="Select Rule" ng-change="update()">
+                    <md-option ng-repeat="rule in rules" ng-value="rule">
+                        Fast/Slow ({{rule}})
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="md-toolbar-tools">
+            <span>Available Threshold:</span>
+            <md-input-container>
+                <md-select ng-model="selectedThreshold" placeholder="Select Threshold" ng-change="update()">
+                    <md-option ng-repeat="threshold in thresholds" ng-value="threshold">
+                        {{threshold}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </md-toolbar>
+    <div class="md-toolbar-tools">
+        <span>Available Resutls</span>
+    </div>
+
+    <div layout="row" layout-wrap flex>
+        <div ng-repeat="availableResut in availableResutls" class="standard" flex="50">
+            <label>
+                <input type="checkbox" id="availableResut" ng-checked="exists(availableResut, SelectedClassAvailableResutls)" ng-click="toggle(availableResut, SelectedClassAvailableResutls)"/>
+                    {{ availableResut }}
+                </label>
+        </div>
+    </div>
+    <br>
+
+    <md-content>
+        <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+            <md-tab label="General">
+                <div id="table_div"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by method">
+                <div id="methodGeneralValues" style="width: 900px; height: 500px;"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by cluster">
+                <div id="clusterGeneralValues" style="width: 900px; height: 500px;"></div>
+            </md-tab>
+            <md-tab label="Bubble chart by encoding">
+                <div id="encodingGeneralValues" style="width: 900px; height: 500px;"></div>
+            </md-tab>
+
+            <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled" label="{{tab.title}}">
+                <div id="table_div" style="width: 90%;"></div>
+                <table>
+                    <tr>
+                        <th>Trace Id</th>
+                        <th>Actual</th>
+                        <th>Prediction</th>
+                    </tr>
+                    <tr ng-repeat="Trace in tab.Traces">
+                        <td>{{Trace.Id}}</td>
+                        <td>{{Trace.actual}}</td>
+                        <td>{{Trace.predicted}}</td>
+                    </tr>
+                </table>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
