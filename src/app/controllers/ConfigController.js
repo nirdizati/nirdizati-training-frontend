@@ -5,15 +5,15 @@
         .controller('ConfigController', [
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             '$state', '$mdToast', 'LogsService', '$scope','$http',
-            'WorkloadService', 'LogsList_dev', '$cookies', '$cookieStore',
+            'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
             '$interval',
             ConfigController
         ]);
 
-    function ConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList_dev, $cookies, $cookieStore, $interval, $window) {
+    function ConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList, $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         $scope.prefixLength = 0;
-        LogsList_dev.query({}, function (data) {
+        LogsList.query({}, function (data) {
             console.log(data)
             $scope.logs = data;
             if (!$cookies.get('selectedLog')) {
@@ -55,7 +55,7 @@
 
         $scope.postToConfiger = function () {
             var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, regression: $scope.SelectedRegressionMethods, clustering: $scope.SelectedClusteringMethods });
-            $http.post('http://127.0.0.1:8000/core_services/configer', parameter).
+            $http.post('http://193.40.11.46/core_services/configer', parameter).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available

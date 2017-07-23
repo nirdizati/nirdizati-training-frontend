@@ -2,7 +2,7 @@
 /* global angular */
 
 var app = angular.module('angularMaterialAdmin');
-var ResultsUrl = "http://127.0.0.1:8000/core_services"
+var ResultsUrl = "http://193.40.11.46/core_services"
 app.service('listAvailableResultsFiles', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/listAvailableResultsFiles', {});
 });
