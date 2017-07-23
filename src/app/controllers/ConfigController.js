@@ -55,7 +55,7 @@
 
         $scope.postToConfiger = function () {
             var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, regression: $scope.SelectedRegressionMethods, clustering: $scope.SelectedClusteringMethods });
-            $http.post('http://127.0.0.1:8000/core_services/configer', parameter).
+            $http.post('http://193.40.11.46/core_services/configer', parameter).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
