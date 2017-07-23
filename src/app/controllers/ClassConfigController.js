@@ -5,17 +5,17 @@
         .controller('ClassConfigController', [
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             '$state', '$mdToast', 'LogsService', '$scope','$http',
-            'WorkloadService', 'LogsList_dev', '$cookies', '$cookieStore',
+            'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
             '$interval',
             ClassConfigController
         ]);
 
-    function ClassConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList_dev, $cookies, $cookieStore, $interval, $window) {
+    function ClassConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList, $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         $scope.prefixLength = 0;
         $scope.thresholdValue = {value: 0};
 
-        LogsList_dev.query({}, function (data) {
+        LogsList.query({}, function (data) {
             console.log(data)
             $scope.logs = data;
             if (!$cookies.get('selectedLog')) {
@@ -66,7 +66,7 @@
                 
             }
             var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, classification: $scope.SelectedClassMethods, clustering: $scope.SelectedClusteringMethods, rule: $scope.selectedRule, threshold: $scope.selectedThreshold });
-            $http.post('http://127.0.0.1:8000/core_services/classConfiger', parameter).
+            $http.post('http://193.40.11.46/core_services/classConfiger', parameter).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available

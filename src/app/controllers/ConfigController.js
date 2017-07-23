@@ -5,15 +5,15 @@
         .controller('ConfigController', [
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             '$state', '$mdToast', 'LogsService', '$scope','$http',
-            'WorkloadService', 'LogsList_dev', '$cookies', '$cookieStore',
+            'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
             '$interval',
             ConfigController
         ]);
 
-    function ConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList_dev, $cookies, $cookieStore, $interval, $window) {
+    function ConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList, $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         $scope.prefixLength = 0;
-        LogsList_dev.query({}, function (data) {
+        LogsList.query({}, function (data) {
             console.log(data)
             $scope.logs = data;
             if (!$cookies.get('selectedLog')) {
