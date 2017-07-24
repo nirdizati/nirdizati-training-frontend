@@ -27,6 +27,7 @@ function browserSyncInit(baseDir, files, browser) {
       middleware: middleware,
       routes: routes,
     },
+    ghostMode: false,
     port: process.env.PORT || 8100,
     browser: browser
   });
