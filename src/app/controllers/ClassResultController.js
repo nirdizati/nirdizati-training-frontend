@@ -158,7 +158,7 @@
             data.addColumn('number', 'AUC');
             data.addColumn('number', 'ACC');
             data.addRows(rows)
-            var table = new google.visualization.Table(document.getElementById('table_div'));
+            var table = new google.visualization.Table(document.getElementById('classtable_div'));
 
             table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
         }
@@ -182,7 +182,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('methodGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('classmethodGeneralValues'));
             chart.draw(data, options);
         }
         
@@ -206,7 +206,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('clusterGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('classclusterGeneralValues'));
             chart.draw(data, options);
         }
 
@@ -229,7 +229,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('encodingGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('classencodingGeneralValues'));
             chart.draw(data, options);
         }
     }

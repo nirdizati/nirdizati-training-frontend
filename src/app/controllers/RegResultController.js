@@ -125,7 +125,7 @@
             data.addColumn('number', 'Rmse');
             data.addColumn('number', 'Rscore');
             data.addRows(rows)
-            var table = new google.visualization.Table(document.getElementById('table_div'));
+            var table = new google.visualization.Table(document.getElementById('regtable_div'));
 
             table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
         }
@@ -149,7 +149,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('methodGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('regmethodGeneralValues'));
             chart.draw(data, options);
         }
 
@@ -173,7 +173,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('clusterGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('regclusterGeneralValues'));
             chart.draw(data, options);
         }
 
@@ -196,7 +196,7 @@
                 bubble: { textStyle: { fontSize: 11 } }
             };
 
-            var chart = new google.visualization.BubbleChart(document.getElementById('encodingGeneralValues'));
+            var chart = new google.visualization.BubbleChart(document.getElementById('regencodingGeneralValues'));
             chart.draw(data, options);
         }
 
