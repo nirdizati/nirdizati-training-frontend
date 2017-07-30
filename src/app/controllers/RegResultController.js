@@ -79,6 +79,90 @@
                         });
                     }
                 });
+                google.charts.load('current', { 'packages': ['table'] });
+                google.charts.setOnLoadCallback(drawTable);
+
+                function drawTable() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Run');
+                    data.addColumn('number', 'Mae');
+                    data.addColumn('number', 'Rmse');
+                    data.addColumn('number', 'Rscore');
+                    data.addRows(rows)
+                    var table = new google.visualization.Table(document.getElementById('regtable_div'));
+
+                    table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+                }
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawMethodGeneralValues);
+
+                function drawMethodGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Mae');
+                    data.addColumn('number', 'Rmse');
+                    data.addColumn('string', 'Method')
+                    data.addColumn('number', 'Rscore');
+                    data.addRows(methodGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Mae' },
+                        vAxis: { title: 'Rmse' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('regmethodGeneralValues'));
+                    chart.draw(data, options);
+                }
+
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawclusterGeneralValues);
+
+                function drawclusterGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Mae');
+                    data.addColumn('number', 'Rmse');
+                    data.addColumn('string', 'Clustering Method')
+                    data.addColumn('number', 'Rscore');
+                    data.addRows(clusterGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Mae' },
+                        vAxis: { title: 'Rmse' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('regclusterGeneralValues'));
+                    chart.draw(data, options);
+                }
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawencodingGeneralValues);
+
+                function drawencodingGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Mae');
+                    data.addColumn('number', 'Rmse');
+                    data.addColumn('string', 'Endcoding Method')
+                    data.addColumn('number', 'Rscore');
+                    data.addRows(encodingGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Mae' },
+                        vAxis: { title: 'Rmse' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('regencodingGeneralValues'));
+                    chart.draw(data, options);
+                }
                 console.log(encodingMethods)
                 console.log('----------------------------------------------------------------------')
             });
@@ -115,90 +199,7 @@
         $scope.exists = function (item, list) {
             return list.indexOf(item) > -1;
         };
-        google.charts.load('current', { 'packages': ['table'] });
-        google.charts.setOnLoadCallback(drawTable);
 
-        function drawTable() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Run');
-            data.addColumn('number', 'Mae');
-            data.addColumn('number', 'Rmse');
-            data.addColumn('number', 'Rscore');
-            data.addRows(rows)
-            var table = new google.visualization.Table(document.getElementById('regtable_div'));
-
-            table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
-        }
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawMethodGeneralValues);
-
-        function drawMethodGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Mae');
-            data.addColumn('number', 'Rmse');
-            data.addColumn('string', 'Method')
-            data.addColumn('number', 'Rscore');
-            data.addRows(methodGeneralValues)
-
-
-            var options = {
-                hAxis: { title: 'Mae' },
-                vAxis: { title: 'Rmse' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('regmethodGeneralValues'));
-            chart.draw(data, options);
-        }
-
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawclusterGeneralValues);
-
-        function drawclusterGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Mae');
-            data.addColumn('number', 'Rmse');
-            data.addColumn('string', 'Clustering Method')
-            data.addColumn('number', 'Rscore');
-            data.addRows(clusterGeneralValues)
-
-
-            var options = {
-                hAxis: { title: 'Mae' },
-                vAxis: { title: 'Rmse' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('regclusterGeneralValues'));
-            chart.draw(data, options);
-        }
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawencodingGeneralValues);
-
-        function drawencodingGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Mae');
-            data.addColumn('number', 'Rmse');
-            data.addColumn('string', 'Endcoding Method')
-            data.addColumn('number', 'Rscore');
-            data.addRows(encodingGeneralValues)
-
-
-            var options = {
-                hAxis: { title: 'Mae' },
-                vAxis: { title: 'Rmse' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('regencodingGeneralValues'));
-            chart.draw(data, options);
-        }
 
 
     }

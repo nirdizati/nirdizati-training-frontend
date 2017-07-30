@@ -23,7 +23,7 @@
         encodingGeneralValues = []
 
         ids = {};
-       
+
         listAvailableResultsLog.query({ restype: '_class' }, function (data) {
             $scope.logs = data;
             if (!$cookies.get('selectedLog')) {
@@ -98,9 +98,9 @@
                                 var encodingMethod = element.Run.replace(".csv", "")
                                 $scope.availableResutls.push(encodingMethod + ' (' + ids[encodingMethod] + ')')
                                 rows.push([element.Run, parseFloat(element.Fmeasure), parseFloat(element.AUC), parseFloat(element.ACC)])
-                                methodGeneralValues.push([ids[encodingMethod].toString(),parseFloat(element.Fmeasure), parseFloat(element.AUC),encodingMethod.split("_")[0], parseFloat(element.ACC) ])
-                                clusterGeneralValues.push([ids[encodingMethod].toString(),parseFloat(element.Fmeasure), parseFloat(element.AUC),encodingMethod.split("_")[2], parseFloat(element.ACC) ])
-                                encodingGeneralValues.push([ids[encodingMethod].toString(),parseFloat(element.Fmeasure), parseFloat(element.AUC),encodingMethod.split("_")[1], parseFloat(element.ACC) ])
+                                methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[0], parseFloat(element.ACC)])
+                                clusterGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[2], parseFloat(element.ACC)])
+                                encodingGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[1], parseFloat(element.ACC)])
 
                             });
                         });
@@ -108,6 +108,91 @@
                     }
 
                 });
+                google.charts.load('current', { 'packages': ['table'] });
+                google.charts.setOnLoadCallback(drawTable);
+
+                function drawTable() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Run');
+                    data.addColumn('number', 'Fmeasure');
+                    data.addColumn('number', 'AUC');
+                    data.addColumn('number', 'ACC');
+                    data.addRows(rows)
+                    var table = new google.visualization.Table(document.getElementById('classtable_div'));
+
+                    table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+                }
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawMethodGeneralValues);
+
+                function drawMethodGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Fmeasure');
+                    data.addColumn('number', 'AUC');
+                    data.addColumn('string', 'Method')
+                    data.addColumn('number', 'ACC');
+                    data.addRows(methodGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Fmeasure' },
+                        vAxis: { title: 'AUC' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('classmethodGeneralValues'));
+                    chart.draw(data, options);
+                }
+
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawclusterGeneralValues);
+
+                function drawclusterGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Fmeasure');
+                    data.addColumn('number', 'AUC');
+                    data.addColumn('string', 'Clustering Method')
+                    data.addColumn('number', 'ACC');
+                    data.addRows(clusterGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Fmeasure' },
+                        vAxis: { title: 'AUC' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('classclusterGeneralValues'));
+                    chart.draw(data, options);
+                }
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawencodingGeneralValues);
+
+                function drawencodingGeneralValues() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('number', 'Fmeasure');
+                    data.addColumn('number', 'AUC');
+                    data.addColumn('string', 'Encoding Method')
+                    data.addColumn('number', 'ACC');
+                    data.addRows(encodingGeneralValues)
+
+
+                    var options = {
+                        hAxis: { title: 'Fmeasure' },
+                        vAxis: { title: 'AUC' },
+                        bubble: { textStyle: { fontSize: 11 } }
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('classencodingGeneralValues'));
+                    chart.draw(data, options);
+                }
+
             });
         }
 
@@ -148,90 +233,7 @@
         $scope.exists = function (item, list) {
             return list.indexOf(item) > -1;
         };
-        google.charts.load('current', { 'packages': ['table'] });
-        google.charts.setOnLoadCallback(drawTable);
 
-        function drawTable() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Run');
-            data.addColumn('number', 'Fmeasure');
-            data.addColumn('number', 'AUC');
-            data.addColumn('number', 'ACC');
-            data.addRows(rows)
-            var table = new google.visualization.Table(document.getElementById('classtable_div'));
-
-            table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
-        }
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawMethodGeneralValues);
-
-        function drawMethodGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Fmeasure');
-            data.addColumn('number', 'AUC');
-            data.addColumn('string', 'Method')
-            data.addColumn('number', 'ACC');
-            data.addRows(methodGeneralValues)
-
-           
-            var options = {
-                hAxis: { title: 'Fmeasure' },
-                vAxis: { title: 'AUC' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('classmethodGeneralValues'));
-            chart.draw(data, options);
-        }
-        
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawclusterGeneralValues);
-
-        function drawclusterGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Fmeasure');
-            data.addColumn('number', 'AUC');
-            data.addColumn('string', 'Clustering Method')
-            data.addColumn('number', 'ACC');
-            data.addRows(clusterGeneralValues)
-
-           
-            var options = {
-                hAxis: { title: 'Fmeasure' },
-                vAxis: { title: 'AUC' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('classclusterGeneralValues'));
-            chart.draw(data, options);
-        }
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawencodingGeneralValues);
-
-        function drawencodingGeneralValues() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'ID');
-            data.addColumn('number', 'Fmeasure');
-            data.addColumn('number', 'AUC');
-            data.addColumn('string', 'Encoding Method')
-            data.addColumn('number', 'ACC');
-            data.addRows(encodingGeneralValues)
-
-           
-            var options = {
-                hAxis: { title: 'Fmeasure' },
-                vAxis: { title: 'AUC' },
-                bubble: { textStyle: { fontSize: 11 } }
-            };
-
-            var chart = new google.visualization.BubbleChart(document.getElementById('classencodingGeneralValues'));
-            chart.draw(data, options);
-        }
     }
 
 })();
