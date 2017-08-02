@@ -29,7 +29,7 @@
         console.log($scope.selectedLog)
         $scope.EncodingMethods = ["simpleIndex", "boolean", "frequency", "complexIndex", "indexLatestPayload"];
         $scope.ClusteringMethods = ['Kmeans', 'None'];
-        $scope.RegressionMethods = ["xgboost", "linear", "randomforest"]
+        $scope.RegressionMethods = ["xgboost", "linear", "randomforest", "lasso"]
         $scope.SelectedEncodingMethods = []
         $scope.SelectedClusteringMethods = []
         $scope.SelectedRegressionMethods = []
