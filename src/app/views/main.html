@@ -1,28 +1,56 @@
-<md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left"
-            class="md-whiteframe-z2 md-sidenav-left">
-  <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
-    <md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn"
-               href="/">
-        <img src="logo.png" alt="Nirdizati Training">
-      <!-- <h1>Train</h1> -->
+<md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2 md-sidenav-left">
+    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
+        <md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn" href="/">
+            <img src="logo.png" alt="Nirdizati Training">
+            <!-- <h1>Train</h1> -->
+        </md-button>
+    </md-toolbar>
+    <md-button ng-repeat-start="item in vm.menuItems" layout="column" layout-align="center center" flex class="capitalize" ng-click="vm.selectItem(item)"
+        ui-sref-active="md-warn" ui-sref="{{item.sref}}">
+        <div hide-sm hide-md class="md-tile-content">
+            <i class="material-icons md-36">{{item.icon}}</i>
+        </div>
+        <div class="md-tile-content">
+            {{item.name}}
+        </div>
     </md-button>
-  </md-toolbar>
-      <md-button ng-repeat-start="item in vm.menuItems" layout="column" layout-align="center center"
-                 flex class="capitalize" ng-click="vm.selectItem(item)"
-                 ui-sref-active="md-warn" ui-sref="{{item.sref}}">
-          <div hide-sm hide-md class="md-tile-content">
-              <i class="material-icons md-36">{{item.icon}}</i>
-          </div>
-          <div class="md-tile-content">
-              {{item.name}}
-          </div>
-      </md-button>
-      <md-divider ng-repeat-end></md-divider>
-<!--       <md-button ng-click="vm.showActions($event)" layout-align="center center">
-          <div class="md-tile-content">
-            Actions
-          </div>
-      </md-button> -->
+
+    <md-divider ng-repeat-end></md-divider>
+    <md-menu>
+        <div class="md-tile-content">
+            <md-button layout="column" layout-align="center center" flex class="capitalize" ng-click="$mdMenu.open()">
+                <div hide-sm hide-md class="md-tile-content">
+                    <i class="material-icons md-36">timeline</i>
+                </div>
+                <div class="md-tile-content">
+                    Compersion
+                </div>
+            </md-button>
+        </div>
+
+        <md-menu-content width="4">
+            <md-menu-item>
+                <md-button ui-sref=".ClassConfig">
+                    Classification Configuration
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ui-sref=".ClassResults">
+                    Classification Results
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ui-sref=".config">
+                    Regression Configuration
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ui-sref=".regResults">
+                    Regression Results
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
 </md-sidenav>
 
 <div layout="column" flex>
@@ -32,7 +60,7 @@
                 <i class="material-icons">menu</i>
             </md-button>
         </section>
-<!--         <section layout-align="end center">
+        <!--         <section layout-align="end center">
             <md-button class="toolbar-button" aria-label="Search">
                 <i class="material-icons">search</i>
             </md-button>

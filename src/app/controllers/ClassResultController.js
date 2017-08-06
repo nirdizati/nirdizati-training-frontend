@@ -98,9 +98,13 @@
                                 var encodingMethod = element.Run.replace(".csv", "")
                                 $scope.availableResutls.push(encodingMethod + ' (' + ids[encodingMethod] + ')')
                                 rows.push([element.Run, parseFloat(element.Fmeasure), parseFloat(element.AUC), parseFloat(element.ACC)])
-                                methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[0], parseFloat(element.ACC)])
-                                clusterGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[2], parseFloat(element.ACC)])
-                                encodingGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[1], parseFloat(element.ACC)])
+                                if (element.Fmeasure != '0') {
+
+                                    methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[0], parseFloat(element.ACC)])
+                                    clusterGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[2], parseFloat(element.ACC)])
+                                    encodingGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[1], parseFloat(element.ACC)])
+
+                                }
 
                             });
                         });

@@ -4,16 +4,16 @@
         .module('app')
         .controller('ClassConfigController', [
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
-            '$state', '$mdToast', 'LogsService', '$scope','$http',
+            '$state', '$mdToast', 'LogsService', '$scope', '$http',
             'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
-            '$interval',
+            '$interval','$state',
             ClassConfigController
         ]);
 
     function ClassConfigController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, LogsService, $scope, $http, WorkloadService, LogsList, $cookies, $cookieStore, $interval, $window) {
         var vm = this;
         $scope.prefixLength = 0;
-        $scope.thresholdValue = {value: 0};
+        $scope.thresholdValue = { value: 0 };
 
         LogsList.query({}, function (data) {
             console.log(data)
@@ -39,7 +39,7 @@
         $scope.selectedRule = ""
         $scope.selectedThreshold = ""
 
-        
+
 
         $scope.toggle = function (item, list) {
             var idx = list.indexOf(item);
@@ -62,20 +62,18 @@
 
         $scope.postToConfiger = function () {
             if ($scope.selectedThreshold == 'custom') {
-                $scope.selectedThreshold = $scope.thresholdValue.value 
-                
+                $scope.selectedThreshold = $scope.thresholdValue.value
+
             }
             var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, classification: $scope.SelectedClassMethods, clustering: $scope.SelectedClusteringMethods, rule: $scope.selectedRule, threshold: $scope.selectedThreshold });
-            $http.post('http://193.40.11.46/core_services/classConfiger', parameter).
-                success(function (data, status, headers, config) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    console.log(data);
-                }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
+            $http.post('http://193.40.11.46/core_services/classConfiger', parameter).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                $state.go('home.ClassResults')  
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
         }
 
     }
