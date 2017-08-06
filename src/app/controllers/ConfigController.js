@@ -6,7 +6,7 @@
             'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             '$state', '$mdToast', 'LogsService', '$scope','$http',
             'WorkloadService', 'LogsList', '$cookies', '$cookieStore',
-            '$interval',
+            '$interval','$state',
             ConfigController
         ]);
 
@@ -55,16 +55,14 @@
 
         $scope.postToConfiger = function () {
             var parameter = JSON.stringify({ log: $scope.selectedLog, prefix: $scope.prefixLength, encoding: $scope.SelectedEncodingMethods, regression: $scope.SelectedRegressionMethods, clustering: $scope.SelectedClusteringMethods });
-            $http.post('http://193.40.11.46/core_services/configer', parameter).
-                success(function (data, status, headers, config) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    console.log(data);
-                }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
+            $http.post('http://193.40.11.46/core_services/configer', parameter).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                $state.go('home.regResults')  
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
         }
 
     }
