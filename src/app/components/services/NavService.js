@@ -23,6 +23,11 @@
         name: 'Prediction',
         icon: 'timeline',
         sref: '.prediction'
+      },
+      {
+        name: 'QueuesStatus',
+        icon: 'timeline',
+        sref: '.QueuesStatus'
       }
     ];
 

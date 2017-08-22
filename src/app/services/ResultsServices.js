@@ -9,6 +9,9 @@ app.service('listAvailableResultsFiles', function ($resource, BackEnd) {
 app.service('listAvailableRules', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/listAvailableRules', {});
 });
+app.service('listGetConfStatus', function ($resource, BackEnd) {
+  return $resource(ResultsUrl + '/getConfStatus', {});
+});
 app.service('listAvailableThreshold', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/listAvailableThreshold', {});
 });
@@ -27,3 +30,5 @@ app.service('fileToJsonResults', function ($resource, BackEnd) {
 app.service('fileToJsonGeneralResults', function ($resource, BackEnd) {
   return $resource(ResultsUrl + '/fileToJsonGeneralResults', {});
 });
+
+

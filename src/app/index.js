@@ -31,6 +31,16 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
           title: 'Prediction Method'
         }
       })
+      //QueuesStatus
+      .state('home.QueuesStatus', {
+        url: '/QueuesStatus',
+        controller: 'QueuesStatusController',
+        controllerAs: 'vm',
+        templateUrl: 'app/views/QueuesStatus.html',
+        data: {
+          title: 'Queues Status'
+        }
+      })
       //Core Configuration 
       .state('home.config', {
         url: '/config',
