@@ -57,6 +57,8 @@
         getListfiles = function () {
             listAvailableResultsFiles.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_regg' }, function (data) {
                 //console.log(data)
+                $scope.downloadRegUrl = "http://193.40.11.46/core_services/downloadZip?log="+ $scope.selectedLog+"&Prefix=" +$scope.selectedPrefix+"&restype=regg"
+
                 encodingMethods = []
                 $scope.regavailableResutls = []
                 var i = 1;
@@ -70,10 +72,13 @@
                                 i++
                                 var encodingMethod = element.Run.replace(".csv", "")
                                 $scope.regavailableResutls.push(encodingMethod + ' (' + ids[encodingMethod] + ')')
-                                rows.push([element.Run, parseFloat(element.Mae), parseFloat(element.Rmse), parseFloat(element.Rscore)])
-                                methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[0], parseFloat(element.Rscore)])
-                                clusterGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[2], parseFloat(element.Rscore)])
-                                encodingGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[1], parseFloat(element.Rscore)])
+                                rows.push([(encodingMethod + ' (' + ids[encodingMethod] + ')'), parseFloat(element.Mae), parseFloat(element.Rmse), parseFloat(element.Rscore)])
+                                if (Math.abs(parseFloat(element.Rscore)) < 1) {
+                                    methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[0], parseFloat(element.Rscore)])
+                                    clusterGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[2], parseFloat(element.Rscore)])
+                                    encodingGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Mae), parseFloat(element.Rmse), encodingMethod.split("_")[1], parseFloat(element.Rscore)])
+
+                                }
 
                             });
                         });
@@ -199,6 +204,8 @@
         $scope.exists = function (item, list) {
             return list.indexOf(item) > -1;
         };
+
+        
 
 
 

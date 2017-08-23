@@ -86,6 +86,7 @@
         }
         getListfiles = function () {
             listAvailableResultsFiles.query({ log: $scope.selectedLog, Prefix: $scope.selectedPrefix, restype: '_class', rule: $scope.selectedRule, threshold: $scope.selectedThreshold }, function (data) {
+                $scope.downloadClassUrl = "http://193.40.11.46/core_services/downloadZip?log="+ $scope.selectedLog+"&Prefix=" +$scope.selectedPrefix+"&restype=class&rule="+$scope.selectedRule+"&threshold=" +$scope.selectedThreshold
                 $scope.availableResutls = []
                 var i = 1;
                 data.forEach(function (element) {
@@ -97,7 +98,7 @@
                                 i++
                                 var encodingMethod = element.Run.replace(".csv", "")
                                 $scope.availableResutls.push(encodingMethod + ' (' + ids[encodingMethod] + ')')
-                                rows.push([element.Run, parseFloat(element.Fmeasure), parseFloat(element.AUC), parseFloat(element.ACC)])
+                                rows.push([(encodingMethod + ' (' + ids[encodingMethod] + ')'), parseFloat(element.Fmeasure), parseFloat(element.AUC), parseFloat(element.ACC)])
                                 if (element.Fmeasure != '0') {
 
                                     methodGeneralValues.push([ids[encodingMethod].toString(), parseFloat(element.Fmeasure), parseFloat(element.AUC), encodingMethod.split("_")[0], parseFloat(element.ACC)])
