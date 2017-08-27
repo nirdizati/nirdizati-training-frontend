@@ -21,9 +21,19 @@
 
       // upload on file select or drop
       $scope.upload = function (file) {
+          $mdDialog.show({
+            template:
+            '<div style="height:200px; width:500px;">'+
+            '<center>'+
+            'Uploading Log'+
+            '<md-progress-circular md-mode="indeterminate"></md-progress-circular>'+
+            '<br/><small>Please Wait...</small>'+
+            '</center>'+
+            '</div>'}
+          )
           Upload.upload({
               url: BackEnd.link+'logs/uploadFile',
-              data: {file: file, 'name': $scope.log.name, 'description': $scope.log.description}
+              data: {file: file}
           }).then(function (resp) {
             $mdDialog.show(
               $mdDialog.alert()
